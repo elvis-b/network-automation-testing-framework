@@ -117,7 +117,7 @@ secrets/
 # -----------------------------------------------------------------------------
 reports/
 test-results/
-screenshots/
+/screenshots/
 videos/
 traces/
 allure-results/

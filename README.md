@@ -257,6 +257,26 @@ allure serve reports/allure-results
 
 ---
 
+## Screenshots
+
+Static captures for the README and portfolio use live in [`assets/screenshots/`](assets/screenshots/).
+
+### CI and Allure
+
+![GitHub Actions pipeline](assets/screenshots/github-actions-jobs.png)
+
+![Allure report overview](assets/screenshots/allure-dashboard.png)
+
+### Application (NetMonitor)
+
+![Login](assets/screenshots/netmonitor-login-screen.png)
+
+![Dashboard](assets/screenshots/netmonitor-dashboard.png)
+
+Other files in the same folder: devices, alerts, add-device dialog, and an Allure suites view.
+
+---
+
 ## Author
 
 **Elvis Bucatariu**  
