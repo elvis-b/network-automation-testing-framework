@@ -1,0 +1,122 @@
+# =============================================================================
+# Network Monitoring System - Docker Compose
+# =============================================================================
+# 
+# Usage:
+#   Start all services:     docker-compose up -d
+#   View logs:              docker-compose logs -f
+#   Stop all services:      docker-compose down
+#   Reset (with volumes):   docker-compose down -v
+#
+# =============================================================================
+
+services:
+  # ---------------------------------------------------------------------------
+  # Backend API (FastAPI)
+  # ---------------------------------------------------------------------------
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: network-monitoring-backend
+    ports:
+      - "5001:5000"
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/
+      - MONGODB_DATABASE=network_monitoring
+      - JWT_SECRET=your-super-secret-key-change-in-production
+      - JWT_EXPIRY_HOURS=24
+      - DEBUG=false
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # Frontend (React + Vite)
+  # ---------------------------------------------------------------------------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: network-monitoring-frontend
+    ports:
+      - "3001:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # MongoDB Database
+  # ---------------------------------------------------------------------------
+  mongodb:
+    image: mongo:7
+    container_name: network-monitoring-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./config/mongo-init:/docker-entrypoint-initdb.d:ro
+    environment:
+      - MONGO_INITDB_DATABASE=network_monitoring
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # MongoDB Express (Web UI for MongoDB) - Development only
+  # ---------------------------------------------------------------------------
+  mongo-express:
+    image: mongo-express:1.0.2
+    container_name: network-monitoring-mongo-express
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_URL=mongodb://mongodb:27017/
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=admin123
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - app-network
+    profiles:
+      - dev
+    restart: unless-stopped
+
+# =============================================================================
+# Networks
+# =============================================================================
+networks:
+  app-network:
+    driver: bridge
+    name: network-monitoring-network
+
+# =============================================================================
+# Volumes
+# =============================================================================
+volumes:
+  mongodb_data:
+    name: network-monitoring-mongodb-data

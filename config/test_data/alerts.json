@@ -1,0 +1,40 @@
+{
+  "alerts": [
+    {
+      "device_name": "core-router-01",
+      "severity": "critical",
+      "type": "performance",
+      "message": "High CPU utilization detected (95%)",
+      "acknowledged": false
+    },
+    {
+      "device_name": "dist-switch-02",
+      "severity": "warning",
+      "type": "connectivity",
+      "message": "Interface GigabitEthernet0/1 is down",
+      "acknowledged": false
+    },
+    {
+      "device_name": "edge-firewall-01",
+      "severity": "info",
+      "type": "security",
+      "message": "Configuration backup completed successfully",
+      "acknowledged": true
+    },
+    {
+      "device_name": "core-router-01",
+      "severity": "warning",
+      "type": "performance",
+      "message": "Memory utilization above 80%",
+      "acknowledged": false
+    },
+    {
+      "device_name": "dist-switch-01",
+      "severity": "info",
+      "type": "connectivity",
+      "message": "New device connected on port Gi0/24",
+      "acknowledged": true
+    }
+  ]
+}
+

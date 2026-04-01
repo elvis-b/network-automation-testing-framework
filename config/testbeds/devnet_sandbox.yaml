@@ -1,0 +1,57 @@
+# =============================================================================
+# PyATS Testbed - Cisco DevNet Sandbox
+# =============================================================================
+#
+# This testbed connects to the Cisco DevNet Always-On IOS-XE Sandbox
+# 
+# Sandbox Details:
+#   Host: sandbox-iosxe-latest-1.cisco.com
+#   Device: IOS XE on Catalyst 8000V
+#   Access: SSH (port 22), NETCONF (port 830), RESTCONF (port 443)
+#
+# Note: This is a shared public sandbox. Do NOT make configuration changes.
+#
+# =============================================================================
+
+testbed:
+  name: DevNet Sandbox Testbed
+  credentials:
+    default:
+      username: developer
+      password: C1sco12345
+
+devices:
+  csr1000v:
+    alias: devnet-sandbox
+    type: router
+    os: iosxe
+    platform: csr1000v
+    connections:
+      defaults:
+        class: unicon.Unicon
+      cli:
+        protocol: ssh
+        ip: sandbox-iosxe-latest-1.cisco.com
+        port: 22
+        arguments:
+          connection_timeout: 30
+          init_exec_commands: []
+          init_config_commands: []
+      netconf:
+        class: yang.connector.Netconf
+        ip: sandbox-iosxe-latest-1.cisco.com
+        port: 830
+      rest:
+        class: rest.connector.Rest
+        ip: sandbox-iosxe-latest-1.cisco.com
+        port: 443
+        protocol: https
+        credentials:
+          rest:
+            username: developer
+            password: C1sco12345
+    custom:
+      description: "Cisco DevNet Always-On IOS-XE Sandbox"
+      location: "Cisco DevNet Cloud"
+      contact: "devnet-sandbox@cisco.com"
+

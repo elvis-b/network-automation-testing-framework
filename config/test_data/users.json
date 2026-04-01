@@ -1,0 +1,47 @@
+{
+  "users": [
+    {
+      "username": "admin",
+      "password": "admin123",
+      "email": "admin@example.com",
+      "role": "admin",
+      "is_active": true
+    },
+    {
+      "username": "operator",
+      "password": "operator123",
+      "email": "operator@example.com",
+      "role": "operator",
+      "is_active": true
+    },
+    {
+      "username": "viewer",
+      "password": "viewer123",
+      "email": "viewer@example.com",
+      "role": "viewer",
+      "is_active": true
+    },
+    {
+      "username": "inactive_user",
+      "password": "inactive123",
+      "email": "inactive@example.com",
+      "role": "viewer",
+      "is_active": false
+    }
+  ],
+  "test_credentials": {
+    "valid": {
+      "username": "admin",
+      "password": "admin123"
+    },
+    "invalid": {
+      "username": "admin",
+      "password": "wrongpassword"
+    },
+    "nonexistent": {
+      "username": "nonexistent",
+      "password": "password123"
+    }
+  }
+}
+

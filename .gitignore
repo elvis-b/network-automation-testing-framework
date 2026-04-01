@@ -1,0 +1,185 @@
+# =============================================================================
+# Git Ignore - Network Automation Testing Framework
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Python
+# -----------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+.venv311/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# -----------------------------------------------------------------------------
+# Node.js (Frontend)
+# -----------------------------------------------------------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn-integrity
+
+# Build output
+frontend/build/
+frontend/dist/
+.next/
+out/
+
+# -----------------------------------------------------------------------------
+# IDE / Editors
+# -----------------------------------------------------------------------------
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+# -----------------------------------------------------------------------------
+# OS Files
+# -----------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# -----------------------------------------------------------------------------
+# Environment & Secrets
+# -----------------------------------------------------------------------------
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+secrets/
+
+# -----------------------------------------------------------------------------
+# Test Artifacts
+# -----------------------------------------------------------------------------
+reports/
+test-results/
+screenshots/
+videos/
+traces/
+allure-results/
+allure-report/
+
+# -----------------------------------------------------------------------------
+# Playwright
+# -----------------------------------------------------------------------------
+playwright-report/
+playwright/.cache/
+test-results/
+
+# -----------------------------------------------------------------------------
+# Docker
+# -----------------------------------------------------------------------------
+.docker/
+
+# -----------------------------------------------------------------------------
+# Logs
+# -----------------------------------------------------------------------------
+*.log
+logs/
+
+# -----------------------------------------------------------------------------
+# Database
+# -----------------------------------------------------------------------------
+*.db
+*.sqlite
+*.sqlite3
+mongodb_data/
+
+# -----------------------------------------------------------------------------
+# Temporary Files
+# -----------------------------------------------------------------------------
+tmp/
+temp/
+*.tmp
+*.bak
+
+# -----------------------------------------------------------------------------
+# Project Specific
+# -----------------------------------------------------------------------------
+# Testbed files with real credentials (not the example ones)
+config/testbeds/local_*.yaml
+config/testbeds/prod_*.yaml
+
+# Local configuration overrides
+config/local/
+
+# Downloaded dependencies
+vendor/
+
+# -----------------------------------------------------------------------------
+# Local publishing / prep artifacts
+# -----------------------------------------------------------------------------
+# Keep repository README, ignore other markdown docs by default for this repo.
+*.md
+!README.md
+
+# Local planning notes not intended for remote.
+Project_Documentation_Instructions
+Project_Instructions
+InterviePrep_Network_Automation_Test_Framework*
+docs/
+

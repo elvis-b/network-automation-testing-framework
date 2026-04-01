@@ -1,0 +1,75 @@
+{
+  "devices": [
+    {
+      "name": "core-router-01",
+      "ip_address": "10.0.0.1",
+      "device_type": "router",
+      "vendor": "cisco",
+      "model": "CSR1000v",
+      "status": "active",
+      "location": "Data Center 1",
+      "metadata": {
+        "os_version": "IOS-XE 17.3",
+        "serial_number": "9KIBQAQ3OPE",
+        "uptime": 864000
+      }
+    },
+    {
+      "name": "core-router-02",
+      "ip_address": "10.0.0.2",
+      "device_type": "router",
+      "vendor": "cisco",
+      "model": "CSR1000v",
+      "status": "active",
+      "location": "Data Center 1",
+      "metadata": {
+        "os_version": "IOS-XE 17.3",
+        "serial_number": "9KIBQAQ3OPF",
+        "uptime": 432000
+      }
+    },
+    {
+      "name": "dist-switch-01",
+      "ip_address": "10.0.1.1",
+      "device_type": "switch",
+      "vendor": "cisco",
+      "model": "Catalyst 9300",
+      "status": "active",
+      "location": "Building A",
+      "metadata": {
+        "os_version": "IOS-XE 17.6",
+        "serial_number": "FCW2214L0VK",
+        "uptime": 1728000
+      }
+    },
+    {
+      "name": "dist-switch-02",
+      "ip_address": "10.0.1.2",
+      "device_type": "switch",
+      "vendor": "cisco",
+      "model": "Catalyst 9300",
+      "status": "inactive",
+      "location": "Building B",
+      "metadata": {
+        "os_version": "IOS-XE 17.6",
+        "serial_number": "FCW2214L0VL",
+        "uptime": 0
+      }
+    },
+    {
+      "name": "edge-firewall-01",
+      "ip_address": "10.0.2.1",
+      "device_type": "firewall",
+      "vendor": "cisco",
+      "model": "ASA 5525-X",
+      "status": "active",
+      "location": "DMZ",
+      "metadata": {
+        "os_version": "ASA 9.16",
+        "serial_number": "JMX1950L0NS",
+        "uptime": 2592000
+      }
+    }
+  ]
+}
+
