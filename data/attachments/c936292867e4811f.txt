@@ -1,4 +1,0 @@
-DEBUG:urllib3.connectionpool:Starting new HTTP connection (7): localhost:5001
-WARNING:tests.conftest:Could not connect to API for authentication
-DEBUG:urllib3.connectionpool:Starting new HTTP connection (8): localhost:5001
-DEBUG:urllib3.connectionpool:Starting new HTTP connection (9): localhost:5001

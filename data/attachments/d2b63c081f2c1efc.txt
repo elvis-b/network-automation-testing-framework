@@ -1,5 +1,0 @@
-DEBUG:urllib3.connectionpool:Starting new HTTP connection (15): localhost:5001
-WARNING:tests.conftest:Could not connect to API for authentication
-DEBUG:urllib3.connectionpool:Starting new HTTP connection (16): localhost:5001
-DEBUG:urllib3.connectionpool:Starting new HTTP connection (17): localhost:5001
-INFO:tests.conftest:MongoDB connection closed
