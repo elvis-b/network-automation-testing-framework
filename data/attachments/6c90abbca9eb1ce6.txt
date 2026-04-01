@@ -1,0 +1,1 @@
+INFO:tests.conftest:Screenshot saved: test-results/screenshots/tests_ui_test_network_mocking.py_TestNetworkMocking_test_handles_network_timeout[chromium].png

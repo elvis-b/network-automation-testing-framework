@@ -1,0 +1,5 @@
+INFO:pages.base_page:Navigating to: http://localhost:3000/login
+DEBUG:pages.base_page:Filling [data-testid="username-input"] with: admin
+DEBUG:pages.base_page:Filling [data-testid="password-input"] with: admin123
+DEBUG:pages.base_page:Clicking: [data-testid="login-button"]
+INFO:tests.conftest:Screenshot saved: test-results/screenshots/tests_ui_test_login.py_TestLoginPage_test_login_button_disabled_during_loading[chromium].png
