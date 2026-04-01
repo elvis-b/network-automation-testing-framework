@@ -208,6 +208,7 @@ jobs:
         if: github.event.inputs.test_scope != 'smoke'
         run: pytest tests/database/ -v --tb=short --html=reports/db-report.html --self-contained-html --alluredir=allure-results/backend
         env:
+          API_BASE_URL: http://localhost:5000/api
           MONGODB_URI: mongodb://localhost:27017/
           MONGODB_DATABASE: network_monitoring
       
