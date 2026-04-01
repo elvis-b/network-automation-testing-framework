@@ -1,0 +1,1 @@
+DEBUG:urllib3.connectionpool:http://localhost:5000 "GET /api/devices HTTP/1.1" 403 47

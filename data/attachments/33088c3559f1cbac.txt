@@ -1,0 +1,4 @@
+DEBUG    urllib3.connectionpool:connectionpool.py:241 Starting new HTTP connection (7): localhost:5001
+WARNING  tests.conftest:conftest.py:230 Could not connect to API for authentication
+DEBUG    urllib3.connectionpool:connectionpool.py:241 Starting new HTTP connection (8): localhost:5001
+DEBUG    urllib3.connectionpool:connectionpool.py:241 Starting new HTTP connection (9): localhost:5001

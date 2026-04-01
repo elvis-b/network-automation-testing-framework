@@ -1,0 +1,2 @@
+DEBUG    urllib3.connectionpool:connectionpool.py:544 http://localhost:5000 "POST /api/auth/login HTTP/1.1" 200 401
+INFO     tests.conftest:conftest.py:290 MongoDB connection closed
