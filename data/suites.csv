@@ -1,0 +1,46 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"
+        Validate /health returns correctly structured data.
+        ","3","test_health_endpoint_schema","tests.api","2026-04-01","passed","2026-04-01","TestHealthSchemaValidation","test_schema_validation","",""
+"
+    Test that health endpoint returns 200 OK.
+
+    This is the most basic smoke test to verify the API is running.
+    ","2","test_health_endpoint_returns_200","tests.api","2026-04-01","passed","2026-04-01","","test_health","",""
+"
+    Test that health endpoint returns healthy status.
+    ","3","test_health_endpoint_returns_healthy_status","tests.api","2026-04-01","passed","2026-04-01","","test_health","",""
+"
+        Validate GET /devices returns correctly structured data.
+
+        Each device in the response must conform to DeviceResponse schema.
+        ","4","test_get_devices_returns_valid_schema","tests.api","2026-04-01","passed","2026-04-01","TestDeviceSchemaValidation","test_schema_validation","",""
+"
+        Test that DeviceResponse schema validates status values.
+        ","1","test_device_schema_status_validation","tests.api","2026-04-01","passed","2026-04-01","TestDeviceSchemaValidation","test_schema_validation","",""
+"
+    Test login fails with invalid password.
+    ","271","test_login_with_invalid_password","tests.api","2026-04-01","passed","2026-04-01","","test_auth","",""
+"
+        Validate GET /devices/{id} returns correctly structured data.
+        ","4","test_get_single_device_schema","tests.api","2026-04-01","skipped","2026-04-01","TestDeviceSchemaValidation","test_schema_validation","",""
+"
+        Test that DeviceResponse schema validates IP addresses.
+        ","1","test_device_schema_ip_validation","tests.api","2026-04-01","passed","2026-04-01","TestDeviceSchemaValidation","test_schema_validation","",""
+"
+    Test successful login with valid credentials.
+
+    Verifies:
+    - Returns 200 status
+    - Returns JWT token
+    - Returns user information
+    ","273","test_login_with_valid_credentials","tests.api","2026-04-01","passed","2026-04-01","","test_auth","",""
+"
+        Validate POST /devices returns correctly structured response.
+        ","5","test_create_device_returns_valid_schema","tests.api","2026-04-01","passed","2026-04-01","TestDeviceSchemaValidation","test_schema_validation","",""
+"
+    Test GET /alerts returns list of alerts.
+    ","6","test_get_all_alerts","tests.api","2026-04-01","failed","2026-04-01","","test_alerts","",""
+"
+    Test GET /devices returns list of devices.
+    ","4","test_get_all_devices","tests.api","2026-04-01","passed","2026-04-01","","test_devices","",""

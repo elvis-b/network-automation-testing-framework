@@ -1,0 +1,2 @@
+DEBUG:urllib3.connectionpool:http://localhost:5000 "GET /api/health HTTP/1.1" 200 159
+INFO:tests.conftest:MongoDB connection closed
