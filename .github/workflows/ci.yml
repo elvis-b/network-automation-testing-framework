@@ -26,7 +26,7 @@ on:
 
 env:
   PYTHON_VERSION: '3.11'
-  NODE_VERSION: '20'
+  NODE_VERSION: '22'
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 
 jobs:
@@ -123,26 +123,48 @@ jobs:
       
       - name: Seed test data
         run: |
-          mongosh network_monitoring --eval "
-            db.users.insertOne({
-              username: 'admin',
-              email: 'admin@example.com',
-              hashed_password: '\$2b\$12\$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBAQN9UrWm.bPi',
-              role: 'admin',
-              is_active: true
-            });
-            db.devices.insertMany([
-              {name: 'test-router-01', ip_address: '192.168.1.1', device_type: 'router', vendor: 'cisco', status: 'active'},
-              {name: 'test-switch-01', ip_address: '192.168.1.2', device_type: 'switch', vendor: 'cisco', status: 'active'}
-            ]);
-            db.alerts.insertOne({
-              device_name: 'test-router-01',
-              severity: 'warning',
-              type: 'performance',
-              message: 'Test alert',
-              acknowledged: false
-            });
-          "
+          python - <<'PY'
+          from pymongo import MongoClient
+
+          client = MongoClient("mongodb://localhost:27017/")
+          db = client["network_monitoring"]
+
+          db.users.update_one(
+              {"username": "admin"},
+              {"$set": {
+                  "username": "admin",
+                  "email": "admin@example.com",
+                  "hashed_password": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBAQN9UrWm.bPi",
+                  "role": "admin",
+                  "is_active": True,
+              }},
+              upsert=True,
+          )
+
+          db.devices.update_one(
+              {"name": "test-router-01"},
+              {"$set": {"name": "test-router-01", "ip_address": "192.168.1.1", "device_type": "router", "vendor": "cisco", "status": "active"}},
+              upsert=True,
+          )
+          db.devices.update_one(
+              {"name": "test-switch-01"},
+              {"$set": {"name": "test-switch-01", "ip_address": "192.168.1.2", "device_type": "switch", "vendor": "cisco", "status": "active"}},
+              upsert=True,
+          )
+
+          db.alerts.update_one(
+              {"message": "Test alert"},
+              {"$set": {
+                  "device_name": "test-router-01",
+                  "severity": "warning",
+                  "type": "performance",
+                  "message": "Test alert",
+                  "acknowledged": False,
+              }},
+              upsert=True,
+          )
+          print("Seeded backend test data")
+          PY
         env:
           MONGODB_URI: mongodb://localhost:27017/
       
@@ -240,24 +262,41 @@ jobs:
       
       - name: Seed test data
         run: |
-          mongosh network_monitoring --eval "
-            db.users.insertOne({
-              username: 'admin',
-              email: 'admin@example.com',
-              hashed_password: '\$2b\$12\$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBAQN9UrWm.bPi',
-              role: 'admin',
-              is_active: true
-            });
-            db.devices.insertMany([
-              {name: 'Core-Router-01', ip_address: '192.168.1.1', device_type: 'router', vendor: 'cisco', model: 'CSR1000v', status: 'active', location: 'Data Center A'},
-              {name: 'Edge-Switch-01', ip_address: '192.168.1.2', device_type: 'switch', vendor: 'cisco', model: 'Catalyst 9300', status: 'active', location: 'Data Center A'},
-              {name: 'Backup-Router-01', ip_address: '192.168.2.1', device_type: 'router', vendor: 'cisco', model: 'ISR 4321', status: 'inactive', location: 'Data Center B'}
-            ]);
-            db.alerts.insertMany([
-              {device_name: 'Core-Router-01', severity: 'critical', type: 'connectivity', message: 'High packet loss detected', acknowledged: false, timestamp: new Date()},
-              {device_name: 'Edge-Switch-01', severity: 'warning', type: 'performance', message: 'CPU utilization at 85%', acknowledged: false, timestamp: new Date()}
-            ]);
-          "
+          python - <<'PY'
+          from datetime import datetime
+          from pymongo import MongoClient
+
+          client = MongoClient("mongodb://localhost:27017/")
+          db = client["network_monitoring"]
+
+          db.users.update_one(
+              {"username": "admin"},
+              {"$set": {
+                  "username": "admin",
+                  "email": "admin@example.com",
+                  "hashed_password": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBAQN9UrWm.bPi",
+                  "role": "admin",
+                  "is_active": True,
+              }},
+              upsert=True,
+          )
+
+          devices = [
+              {"name": "Core-Router-01", "ip_address": "192.168.1.1", "device_type": "router", "vendor": "cisco", "model": "CSR1000v", "status": "active", "location": "Data Center A"},
+              {"name": "Edge-Switch-01", "ip_address": "192.168.1.2", "device_type": "switch", "vendor": "cisco", "model": "Catalyst 9300", "status": "active", "location": "Data Center A"},
+              {"name": "Backup-Router-01", "ip_address": "192.168.2.1", "device_type": "router", "vendor": "cisco", "model": "ISR 4321", "status": "inactive", "location": "Data Center B"},
+          ]
+          for device in devices:
+              db.devices.update_one({"name": device["name"]}, {"$set": device}, upsert=True)
+
+          alerts = [
+              {"device_name": "Core-Router-01", "severity": "critical", "type": "connectivity", "message": "High packet loss detected", "acknowledged": False, "timestamp": datetime.utcnow()},
+              {"device_name": "Edge-Switch-01", "severity": "warning", "type": "performance", "message": "CPU utilization at 85%", "acknowledged": False, "timestamp": datetime.utcnow()},
+          ]
+          for alert in alerts:
+              db.alerts.update_one({"message": alert["message"]}, {"$set": alert}, upsert=True)
+          print("Seeded UI test data")
+          PY
       
       - name: Start backend
         run: |
@@ -397,15 +436,24 @@ jobs:
       
       - name: Seed test data
         run: |
-          mongosh network_monitoring --eval "
-            db.users.insertOne({
-              username: 'admin',
-              email: 'admin@example.com',
-              hashed_password: '\$2b\$12\$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBAQN9UrWm.bPi',
-              role: 'admin',
-              is_active: true
-            });
-          "
+          python - <<'PY'
+          from pymongo import MongoClient
+
+          client = MongoClient("mongodb://localhost:27017/")
+          db = client["network_monitoring"]
+          db.users.update_one(
+              {"username": "admin"},
+              {"$set": {
+                  "username": "admin",
+                  "email": "admin@example.com",
+                  "hashed_password": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBAQN9UrWm.bPi",
+                  "role": "admin",
+                  "is_active": True,
+              }},
+              upsert=True,
+          )
+          print("Seeded integration test data")
+          PY
       
       - name: Start services
         run: |
@@ -511,13 +559,23 @@ jobs:
           echo "Merged Allure files:"
           ls -la allure-results | head -100
 
-      - name: Generate Allure dashboard
-        uses: simple-elf/allure-report-action@v1.9
+      - name: Set up Java
+        uses: actions/setup-java@v4
         with:
-          allure_results: allure-results
-          gh_pages: gh-pages
-          allure_report: allure-report
-          allure_history: allure-history
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install Allure CLI
+        run: npm install -g allure-commandline --unsafe-perm
+
+      - name: Generate Allure dashboard
+        run: |
+          allure generate allure-results --clean -o allure-history
 
       - name: Publish Allure to GitHub Pages
         if: github.event_name != 'pull_request'
