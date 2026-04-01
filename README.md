@@ -2,7 +2,7 @@
 
 [![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF?logo=githubactions&logoColor=white)](https://github.com/elvis-b/network-automation-testing-framework/actions)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![Playwright](https://img.shields.io/badge/Playwright-1.40+-green.svg)](https://playwright.dev/)
+[![Playwright](https://img.shields.io/badge/Playwright-1.58+-green.svg)](https://playwright.dev/)
 [![PyATS](https://img.shields.io/badge/PyATS-Genie-orange.svg)](https://developer.cisco.com/pyats/)
 
 This repository contains a multi-layer test automation framework for a network monitoring application.
@@ -34,7 +34,7 @@ This project is a multi-layer automation framework for a network monitoring appl
 ### Prerequisites
 
 - Python 3.11+
-- Node.js 20+
+- Node.js 22+ (see `frontend/package.json` for the tested range)
 - Docker & Docker Compose
 - Git
 
@@ -59,6 +59,11 @@ docker-compose ps
 
 ### Local Development
 
+The UI calls the API through **relative `/api` URLs**. The Vite dev server proxies `/api` to your backend (see `frontend/vite.config.js`).
+
+- Default proxy target: `http://localhost:5000` (matches a local `uvicorn` on port 5000).
+- If the API is on another origin (e.g. Docker maps **5001→5000**), set `VITE_DEV_PROXY_TARGET` before `npm run dev` (see `env.example`).
+
 ```bash
 # Clone and setup
 git clone https://github.com/elvis-b/network-automation-testing-framework.git
@@ -71,7 +76,7 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 # Install Python dependencies
 pip install -r requirements.txt
 
-# Install Playwright browsers
+# Install Playwright browsers (add --with-deps on Linux if install fails)
 playwright install chromium firefox
 
 # Install frontend dependencies
@@ -80,12 +85,16 @@ cd frontend && npm install && cd ..
 # Start MongoDB (requires Docker)
 docker run -d -p 27017:27017 --name mongodb mongo:7
 
-# Start backend
-cd backend && uvicorn app.main:app --reload --port 8000 &
+# Terminal 1 — backend (pick a port and match VITE_DEV_PROXY_TARGET if not 5000)
+cd backend && uvicorn app.main:app --reload --host 0.0.0.0 --port 5000
 
-# Start frontend
-cd frontend && npm run dev &
+# Terminal 2 — frontend (Vite serves on http://localhost:3000)
+# With Docker Compose API on host port 5001:
+#   export VITE_DEV_PROXY_TARGET=http://localhost:5001
+cd frontend && npm run dev
 ```
+
+With **Docker Compose** for the stack, use host URLs from the compose file (e.g. frontend **3001**, API **5001**) in `API_BASE_URL` / `FRONTEND_BASE_URL` for tests, and point the Vite proxy at the same API origin you use in the browser.
 
 ---
 
