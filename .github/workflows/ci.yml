@@ -339,7 +339,7 @@ jobs:
         working-directory: frontend
         run: npm run dev &
         env:
-          VITE_API_URL: http://localhost:5000/api
+          VITE_DEV_PROXY_TARGET: http://localhost:5000
       
       - name: Wait for services
         run: |
