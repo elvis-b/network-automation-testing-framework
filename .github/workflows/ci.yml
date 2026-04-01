@@ -124,6 +124,7 @@ jobs:
       - name: Seed test data
         run: |
           python - <<'PY'
+          from datetime import datetime
           from pymongo import MongoClient
 
           client = MongoClient("mongodb://localhost:27017/")
@@ -134,9 +135,10 @@ jobs:
               {"$set": {
                   "username": "admin",
                   "email": "admin@example.com",
-                  "hashed_password": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBAQN9UrWm.bPi",
+                  "password_hash": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBAQN9UrWm.bPi",
                   "role": "admin",
                   "is_active": True,
+                  "created_at": datetime.utcnow(),
               }},
               upsert=True,
           )
@@ -274,9 +276,10 @@ jobs:
               {"$set": {
                   "username": "admin",
                   "email": "admin@example.com",
-                  "hashed_password": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBAQN9UrWm.bPi",
+                  "password_hash": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBAQN9UrWm.bPi",
                   "role": "admin",
                   "is_active": True,
+                  "created_at": datetime.utcnow(),
               }},
               upsert=True,
           )
@@ -437,6 +440,7 @@ jobs:
       - name: Seed test data
         run: |
           python - <<'PY'
+          from datetime import datetime
           from pymongo import MongoClient
 
           client = MongoClient("mongodb://localhost:27017/")
@@ -446,9 +450,10 @@ jobs:
               {"$set": {
                   "username": "admin",
                   "email": "admin@example.com",
-                  "hashed_password": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBAQN9UrWm.bPi",
+                  "password_hash": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBAQN9UrWm.bPi",
                   "role": "admin",
                   "is_active": True,
+                  "created_at": datetime.utcnow(),
               }},
               upsert=True,
           )
