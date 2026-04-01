@@ -4,18 +4,18 @@ MongoDB Database Connection
 Handles MongoDB connection lifecycle and provides database access.
 """
 
-from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
-from typing import Optional
 import logging
+from typing import Optional
 
 from app.config import settings
+from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 
 logger = logging.getLogger(__name__)
 
 
 class MongoDB:
     """MongoDB connection manager."""
-    
+
     client: Optional[AsyncIOMotorClient] = None
     database: Optional[AsyncIOMotorDatabase] = None
 
@@ -26,19 +26,19 @@ db = MongoDB()
 async def connect_to_mongo() -> None:
     """
     Establish connection to MongoDB.
-    
+
     Called during application startup.
     """
     logger.info(f"Connecting to MongoDB at {settings.mongodb_uri}")
-    
+
     db.client = AsyncIOMotorClient(
         settings.mongodb_uri,
         maxPoolSize=10,
         minPoolSize=1,
-        serverSelectionTimeoutMS=5000
+        serverSelectionTimeoutMS=5000,
     )
     db.database = db.client[settings.mongodb_database]
-    
+
     # Verify connection
     try:
         await db.client.admin.command("ping")
@@ -51,7 +51,7 @@ async def connect_to_mongo() -> None:
 async def close_mongo_connection() -> None:
     """
     Close MongoDB connection.
-    
+
     Called during application shutdown.
     """
     if db.client:
@@ -62,10 +62,10 @@ async def close_mongo_connection() -> None:
 def get_database() -> AsyncIOMotorDatabase:
     """
     Get database instance.
-    
+
     Returns:
         AsyncIOMotorDatabase: MongoDB database instance
-        
+
     Raises:
         RuntimeError: If database is not connected
     """
@@ -77,10 +77,10 @@ def get_database() -> AsyncIOMotorDatabase:
 async def get_collection(collection_name: str):
     """
     Get a collection from the database.
-    
+
     Args:
         collection_name: Name of the collection
-        
+
     Returns:
         Collection instance
     """
@@ -91,22 +91,23 @@ async def get_collection(collection_name: str):
 async def seed_database() -> None:
     """
     Seed database with initial data.
-    
+
     Creates default users, devices, and alerts for testing.
     """
-    from app.models.user import UserCreate
-    from app.models.device import DeviceCreate
-    from app.models.alert import AlertCreate
-    from passlib.context import CryptContext
     from datetime import datetime
-    
+
+    from app.models.alert import AlertCreate
+    from app.models.device import DeviceCreate
+    from app.models.user import UserCreate
+    from passlib.context import CryptContext
+
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     database = get_database()
-    
+
     # Seed users
     users_collection = database["users"]
     existing_users = await users_collection.count_documents({})
-    
+
     if existing_users == 0:
         default_users = [
             {
@@ -116,7 +117,7 @@ async def seed_database() -> None:
                 "role": "admin",
                 "is_active": True,
                 "created_at": datetime.utcnow(),
-                "last_login": None
+                "last_login": None,
             },
             {
                 "username": "operator",
@@ -125,7 +126,7 @@ async def seed_database() -> None:
                 "role": "operator",
                 "is_active": True,
                 "created_at": datetime.utcnow(),
-                "last_login": None
+                "last_login": None,
             },
             {
                 "username": "viewer",
@@ -134,16 +135,16 @@ async def seed_database() -> None:
                 "role": "viewer",
                 "is_active": True,
                 "created_at": datetime.utcnow(),
-                "last_login": None
-            }
+                "last_login": None,
+            },
         ]
         await users_collection.insert_many(default_users)
         logger.info("Seeded default users")
-    
+
     # Seed devices
     devices_collection = database["devices"]
     existing_devices = await devices_collection.count_documents({})
-    
+
     if existing_devices == 0:
         default_devices = [
             {
@@ -157,7 +158,7 @@ async def seed_database() -> None:
                 "created_at": datetime.utcnow(),
                 "updated_at": datetime.utcnow(),
                 "last_seen": datetime.utcnow(),
-                "metadata": {"os_version": "IOS-XE 17.3", "uptime": 864000}
+                "metadata": {"os_version": "IOS-XE 17.3", "uptime": 864000},
             },
             {
                 "name": "core-router-02",
@@ -170,7 +171,7 @@ async def seed_database() -> None:
                 "created_at": datetime.utcnow(),
                 "updated_at": datetime.utcnow(),
                 "last_seen": datetime.utcnow(),
-                "metadata": {"os_version": "IOS-XE 17.3", "uptime": 432000}
+                "metadata": {"os_version": "IOS-XE 17.3", "uptime": 432000},
             },
             {
                 "name": "dist-switch-01",
@@ -183,7 +184,7 @@ async def seed_database() -> None:
                 "created_at": datetime.utcnow(),
                 "updated_at": datetime.utcnow(),
                 "last_seen": datetime.utcnow(),
-                "metadata": {"os_version": "IOS-XE 17.6", "uptime": 1728000}
+                "metadata": {"os_version": "IOS-XE 17.6", "uptime": 1728000},
             },
             {
                 "name": "dist-switch-02",
@@ -196,7 +197,7 @@ async def seed_database() -> None:
                 "created_at": datetime.utcnow(),
                 "updated_at": datetime.utcnow(),
                 "last_seen": datetime.utcnow(),
-                "metadata": {"os_version": "IOS-XE 17.6", "uptime": 0}
+                "metadata": {"os_version": "IOS-XE 17.6", "uptime": 0},
             },
             {
                 "name": "edge-firewall-01",
@@ -209,21 +210,21 @@ async def seed_database() -> None:
                 "created_at": datetime.utcnow(),
                 "updated_at": datetime.utcnow(),
                 "last_seen": datetime.utcnow(),
-                "metadata": {"os_version": "ASA 9.16", "uptime": 2592000}
-            }
+                "metadata": {"os_version": "ASA 9.16", "uptime": 2592000},
+            },
         ]
         await devices_collection.insert_many(default_devices)
         logger.info("Seeded default devices")
-    
+
     # Seed alerts
     alerts_collection = database["alerts"]
     existing_alerts = await alerts_collection.count_documents({})
-    
+
     if existing_alerts == 0:
         # Get device IDs
         devices = await devices_collection.find({}).to_list(length=100)
         device_map = {d["name"]: str(d["_id"]) for d in devices}
-        
+
         default_alerts = [
             {
                 "device_id": device_map.get("core-router-01"),
@@ -236,7 +237,7 @@ async def seed_database() -> None:
                 "acknowledged_by": None,
                 "acknowledged_at": None,
                 "resolved": False,
-                "resolved_at": None
+                "resolved_at": None,
             },
             {
                 "device_id": device_map.get("dist-switch-02"),
@@ -249,7 +250,7 @@ async def seed_database() -> None:
                 "acknowledged_by": None,
                 "acknowledged_at": None,
                 "resolved": False,
-                "resolved_at": None
+                "resolved_at": None,
             },
             {
                 "device_id": device_map.get("edge-firewall-01"),
@@ -262,9 +263,8 @@ async def seed_database() -> None:
                 "acknowledged_by": "admin",
                 "acknowledged_at": datetime.utcnow(),
                 "resolved": True,
-                "resolved_at": datetime.utcnow()
-            }
+                "resolved_at": datetime.utcnow(),
+            },
         ]
         await alerts_collection.insert_many(default_alerts)
         logger.info("Seeded default alerts")
-

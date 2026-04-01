@@ -1,6 +1,8 @@
-from playwright.sync_api import Page, expect
-from pages.base_page import BasePage
 import logging
+
+from playwright.sync_api import Page, expect
+
+from pages.base_page import BasePage
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +21,7 @@ class LoginPage(BasePage):
     def __init__(self, page: Page, base_url: str = "http://localhost:3000"):
         """
         Initialize LoginPage.
-        
+
         Args:
             page: Playwright Page object
             base_url: Base URL of the application
@@ -41,28 +43,30 @@ class LoginPage(BasePage):
     def login(self, username: str, password: str) -> None:
         """
         Perform login with provided credentials.
-        
+
         Args:
             username: Username to login with
             password: Password to login with
         """
         logger.info(f"Attempting login with username: {username}")
-        
+
         # Clear and fill username
         self.page.locator(self.USERNAME_INPUT).clear()
         self.fill(self.USERNAME_INPUT, username)
-        
+
         # Clear and fill password
         self.page.locator(self.PASSWORD_INPUT).clear()
         self.fill(self.PASSWORD_INPUT, password)
-        
+
         # Click login button
         self.click(self.LOGIN_BUTTON)
 
-    def login_and_wait_for_dashboard(self, username: str, password: str, timeout: int = 10000) -> None:
+    def login_and_wait_for_dashboard(
+        self, username: str, password: str, timeout: int = 10000
+    ) -> None:
         """
         Perform login and wait for redirect to dashboard.
-        
+
         Args:
             username: Username to login with
             password: Password to login with
@@ -74,7 +78,7 @@ class LoginPage(BasePage):
     def is_logged_in(self) -> bool:
         """
         Check if user is logged in by checking for dashboard URL.
-        
+
         Returns:
             True if on dashboard page, False otherwise
         """
@@ -83,7 +87,7 @@ class LoginPage(BasePage):
     def get_error_message(self) -> str:
         """
         Get login error message text.
-        
+
         Returns:
             Error message text or empty string if not visible
         """
@@ -95,7 +99,7 @@ class LoginPage(BasePage):
     def is_error_displayed(self) -> bool:
         """
         Check if error message is displayed.
-        
+
         Returns:
             True if error message is visible
         """
@@ -111,7 +115,7 @@ class LoginPage(BasePage):
     def is_loading(self) -> bool:
         """
         Check if login button shows loading state.
-        
+
         Returns:
             True if loading spinner is visible
         """

@@ -1,7 +1,9 @@
-from playwright.sync_api import Page, expect
-from pages.base_page import BasePage
-from typing import List, Dict
 import logging
+from typing import Dict, List
+
+from playwright.sync_api import Page, expect
+
+from pages.base_page import BasePage
 
 logger = logging.getLogger(__name__)
 
@@ -15,12 +17,12 @@ class DashboardPage(BasePage):
     ACTIVE_DEVICE_COUNT = '[data-testid="active-device-count"]'
     INACTIVE_DEVICE_COUNT = '[data-testid="inactive-device-count"]'
     DEVICE_LIST = '[data-testid="device-list"]'
-    DEVICE_ITEM = '.device-item'
+    DEVICE_ITEM = ".device-item"
     ALERT_PANEL = '[data-testid="alert-panel"]'
-    ALERT_ITEM = '.alert-item'
+    ALERT_ITEM = ".alert-item"
     REFRESH_BUTTON = '[data-testid="refresh-btn"]'
     LOADING = '[data-testid="loading"]'
-    
+
     # Navigation selectors
     NAV_DASHBOARD = '[data-testid="nav-dashboard"]'
     NAV_DEVICES = '[data-testid="nav-devices"]'
@@ -31,7 +33,7 @@ class DashboardPage(BasePage):
     def __init__(self, page: Page, base_url: str = "http://localhost:3000"):
         """
         Initialize DashboardPage.
-        
+
         Args:
             page: Playwright Page object
             base_url: Base URL of the application
@@ -54,7 +56,7 @@ class DashboardPage(BasePage):
     def get_device_count(self) -> int:
         """
         Get total device count from stats card.
-        
+
         Returns:
             Number of devices
         """
@@ -64,7 +66,7 @@ class DashboardPage(BasePage):
     def get_alert_count(self) -> int:
         """
         Get active alert count from stats card.
-        
+
         Returns:
             Number of active alerts
         """
@@ -84,7 +86,7 @@ class DashboardPage(BasePage):
     def get_device_names(self) -> List[str]:
         """
         Get list of device names displayed on dashboard.
-        
+
         Returns:
             List of device names
         """
@@ -98,7 +100,7 @@ class DashboardPage(BasePage):
     def click_device(self, device_name: str) -> None:
         """
         Click on a specific device in the list.
-        
+
         Args:
             device_name: Name of device to click
         """
@@ -107,7 +109,7 @@ class DashboardPage(BasePage):
     def get_alert_messages(self) -> List[str]:
         """
         Get list of alert messages from alert panel.
-        
+
         Returns:
             List of alert messages
         """
@@ -155,9 +157,11 @@ class DashboardPage(BasePage):
     def wait_for_device_count(self, expected_count: int, timeout: int = 10000) -> None:
         """
         Wait for device count to reach expected value.
-        
+
         Args:
             expected_count: Expected number of devices
             timeout: Maximum time to wait in milliseconds
         """
-        expect(self.page.locator(self.DEVICE_COUNT)).to_have_text(str(expected_count), timeout=timeout)
+        expect(self.page.locator(self.DEVICE_COUNT)).to_have_text(
+            str(expected_count), timeout=timeout
+        )

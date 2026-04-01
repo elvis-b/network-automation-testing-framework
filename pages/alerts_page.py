@@ -1,7 +1,9 @@
-from playwright.sync_api import Page, expect
-from pages.base_page import BasePage
-from typing import List
 import logging
+from typing import List
+
+from playwright.sync_api import Page, expect
+
+from pages.base_page import BasePage
 
 logger = logging.getLogger(__name__)
 
@@ -11,15 +13,15 @@ class AlertsPage(BasePage):
 
     # Main selectors
     ALERT_LIST = '[data-testid="alert-list"]'
-    ALERT_ITEM = '.alert-item'
+    ALERT_ITEM = ".alert-item"
     SEVERITY_FILTER = '[data-testid="severity-filter"]'
     REFRESH_BTN = '[data-testid="refresh-btn"]'
     LOADING = '[data-testid="loading"]'
-    
+
     # Tab selectors
     TAB_ACTIVE = '[data-testid="tab-active"]'
     TAB_ACKNOWLEDGED = '[data-testid="tab-acknowledged"]'
-    
+
     # Dynamic selectors (use with format)
     ALERT = '[data-testid="alert-{id}"]'
     ACK_BTN = '[data-testid="ack-btn-{id}"]'
@@ -28,7 +30,7 @@ class AlertsPage(BasePage):
     def __init__(self, page: Page, base_url: str = "http://localhost:3000"):
         """
         Initialize AlertsPage.
-        
+
         Args:
             page: Playwright Page object
             base_url: Base URL of the application
@@ -52,7 +54,7 @@ class AlertsPage(BasePage):
     def get_alert_count(self) -> int:
         """
         Get number of alerts in the list.
-        
+
         Returns:
             Number of alert items
         """
@@ -61,7 +63,7 @@ class AlertsPage(BasePage):
     def get_alert_messages(self) -> List[str]:
         """
         Get list of alert messages.
-        
+
         Returns:
             List of alert message texts
         """
@@ -71,18 +73,20 @@ class AlertsPage(BasePage):
     def filter_by_severity(self, severity: str) -> None:
         """
         Filter alerts by severity.
-        
+
         Args:
             severity: Severity level ('critical', 'warning', 'info', or '' for all)
         """
         self.click(self.SEVERITY_FILTER)
         self.page.wait_for_timeout(200)
-        
+
         if severity:
-            self.page.locator(f'[role="option"]:has-text("{severity.capitalize()}")').click()
+            self.page.locator(
+                f'[role="option"]:has-text("{severity.capitalize()}")'
+            ).click()
         else:
             self.page.locator('[role="option"]:has-text("All")').click()
-        
+
         self.page.wait_for_timeout(500)
 
     def switch_to_active_tab(self) -> None:
@@ -98,7 +102,7 @@ class AlertsPage(BasePage):
     def acknowledge_alert(self, alert_id: str) -> None:
         """
         Acknowledge an alert.
-        
+
         Args:
             alert_id: ID of alert to acknowledge
         """
@@ -110,7 +114,7 @@ class AlertsPage(BasePage):
     def resolve_alert(self, alert_id: str) -> None:
         """
         Resolve an acknowledged alert.
-        
+
         Args:
             alert_id: ID of alert to resolve
         """
@@ -122,7 +126,7 @@ class AlertsPage(BasePage):
     def click_alert(self, alert_id: str) -> None:
         """
         Click on an alert to view details.
-        
+
         Args:
             alert_id: ID of alert to click
         """
@@ -136,10 +140,10 @@ class AlertsPage(BasePage):
     def is_alert_visible(self, alert_id: str) -> bool:
         """
         Check if alert with given ID is visible.
-        
+
         Args:
             alert_id: Alert ID to check
-            
+
         Returns:
             True if alert is visible
         """
@@ -148,7 +152,7 @@ class AlertsPage(BasePage):
     def get_critical_alert_count(self) -> int:
         """
         Get count of critical severity alerts.
-        
+
         Returns:
             Number of critical alerts
         """
@@ -159,4 +163,3 @@ class AlertsPage(BasePage):
         expect(self.page.locator(self.TAB_ACTIVE)).to_be_visible()
         expect(self.page.locator(self.TAB_ACKNOWLEDGED)).to_be_visible()
         expect(self.page.locator(self.SEVERITY_FILTER)).to_be_visible()
-

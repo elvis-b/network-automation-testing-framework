@@ -4,19 +4,18 @@ Network Monitoring API - Main Application
 FastAPI application for network device monitoring and management.
 """
 
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from contextlib import asynccontextmanager
 import logging
+from contextlib import asynccontextmanager
 
 from app.config import settings
-from app.database.mongodb import connect_to_mongo, close_mongo_connection
-from app.routes import auth, devices, alerts, health
+from app.database.mongodb import close_mongo_connection, connect_to_mongo
+from app.routes import alerts, auth, devices, health
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 # Configure logging
 logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
 
@@ -25,16 +24,16 @@ logger = logging.getLogger(__name__)
 async def lifespan(app: FastAPI):
     """
     Application lifespan manager.
-    
+
     Handles startup and shutdown events.
     """
     # Startup
     logger.info("Starting Network Monitoring API...")
     await connect_to_mongo()
     logger.info("Connected to MongoDB")
-    
+
     yield
-    
+
     # Shutdown
     logger.info("Shutting down Network Monitoring API...")
     await close_mongo_connection()
@@ -49,7 +48,7 @@ app = FastAPI(
     docs_url="/api/docs",
     redoc_url="/api/redoc",
     openapi_url="/api/openapi.json",
-    lifespan=lifespan
+    lifespan=lifespan,
 )
 
 # Configure CORS
@@ -75,16 +74,13 @@ async def root():
         "name": settings.app_name,
         "version": settings.app_version,
         "docs": "/api/docs",
-        "health": "/api/health"
+        "health": "/api/health",
     }
 
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(
-        "app.main:app",
-        host=settings.host,
-        port=settings.port,
-        reload=settings.debug
-    )
 
+    uvicorn.run(
+        "app.main:app", host=settings.host, port=settings.port, reload=settings.debug
+    )

@@ -12,11 +12,11 @@ Usage:
     login_page.login("admin", "password")
 """
 
+from pages.alerts_page import AlertsPage
 from pages.base_page import BasePage
-from pages.login_page import LoginPage
 from pages.dashboard_page import DashboardPage
 from pages.devices_page import DevicesPage
-from pages.alerts_page import AlertsPage
+from pages.login_page import LoginPage
 
 __all__ = [
     "BasePage",

@@ -1,0 +1,14 @@
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+exclude = '''
+(
+  /(\.git|\.hg|\.mypy_cache|\.pytest_cache|\.tox|\.nox|\.venv|venv|\.venv311)/
+)
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 88
+skip_gitignore = true
+skip = [".venv", "venv", ".venv311", "__pycache__"]

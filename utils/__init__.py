@@ -11,8 +11,8 @@ Usage:
 """
 
 from utils.database_helper import DatabaseHelper
+from utils.logger import get_logger, setup_logger
 from utils.network_helper import NetworkHelper
-from utils.logger import setup_logger, get_logger
 
 __all__ = [
     "DatabaseHelper",
@@ -20,4 +20,3 @@ __all__ = [
     "setup_logger",
     "get_logger",
 ]
-
