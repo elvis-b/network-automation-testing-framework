@@ -1,5 +1,6 @@
 import pytest
 import requests
+from datetime import datetime
 
 
 @pytest.mark.api
@@ -219,3 +220,70 @@ def test_alerts_sorted_by_severity(api_base_url, api_client):
         assert (
             current_severity <= next_severity
         ), f"Alerts not sorted correctly: {alerts[i]['severity']} should come before {alerts[i+1]['severity']}"
+
+
+@pytest.mark.api
+@pytest.mark.regression
+def test_get_alerts_skips_malformed_legacy_documents(
+    api_base_url, api_client, alerts_collection
+):
+    """GET /alerts should tolerate malformed legacy documents."""
+    suffix = datetime.utcnow().strftime("%Y%m%d%H%M%S%f")
+
+    valid_message = f"test-valid-alert-{suffix}"
+    malformed_message = f"test-malformed-alert-{suffix}"
+
+    alerts_collection.insert_one(
+        {
+            "device_id": "legacy-device-001",
+            "device_name": "legacy-router-01",
+            "severity": "warning",
+            "type": "performance",
+            "message": valid_message,
+            "acknowledged": False,
+            "timestamp": datetime.utcnow(),
+        }
+    )
+    alerts_collection.insert_one(
+        {
+            # Missing device_id on purpose (legacy malformed document)
+            "device_name": "legacy-router-02",
+            "severity": "critical",
+            "type": "connectivity",
+            "message": malformed_message,
+            "acknowledged": False,
+            "timestamp": datetime.utcnow(),
+        }
+    )
+
+    response = api_client.get(f"{api_base_url}/alerts")
+    assert response.status_code == 200, f"Failed to get alerts: {response.text}"
+
+    data = response.json()
+    messages = [alert["message"] for alert in data["alerts"]]
+
+    assert valid_message in messages
+    assert malformed_message not in messages
+
+
+@pytest.mark.api
+@pytest.mark.regression
+def test_get_alert_by_id_returns_422_for_malformed_document(
+    api_base_url, api_client, alerts_collection
+):
+    """GET /alerts/{id} should return 422 for malformed legacy documents."""
+    malformed_alert = alerts_collection.insert_one(
+        {
+            # Missing device_id on purpose (legacy malformed document)
+            "device_name": "legacy-router-by-id",
+            "severity": "critical",
+            "type": "connectivity",
+            "message": "test-malformed-alert-by-id",
+            "acknowledged": False,
+            "timestamp": datetime.utcnow(),
+        }
+    )
+
+    response = api_client.get(f"{api_base_url}/alerts/{malformed_alert.inserted_id}")
+    assert response.status_code == 422
+    assert "malformed" in response.json().get("detail", "").lower()

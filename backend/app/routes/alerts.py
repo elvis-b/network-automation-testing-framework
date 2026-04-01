@@ -21,6 +21,7 @@ from app.routes.auth import get_current_user
 from bson import ObjectId
 from bson.errors import InvalidId
 from fastapi import APIRouter, Depends, HTTPException, Query, status
+from pydantic import ValidationError
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -42,6 +43,16 @@ def alert_helper(alert: dict) -> dict:
         "resolved": alert.get("resolved", False),
         "resolved_at": alert.get("resolved_at"),
     }
+
+
+def safe_alert_response(alert: dict) -> Optional[AlertResponse]:
+    """Build an alert response and tolerate malformed legacy documents."""
+    try:
+        return AlertResponse(**alert_helper(alert))
+    except (KeyError, TypeError, ValueError, ValidationError) as exc:
+        alert_id = str(alert.get("_id", "unknown"))
+        logger.warning("Skipping malformed alert document id=%s: %s", alert_id, exc)
+        return None
 
 
 @router.get("", response_model=AlertListResponse)
@@ -108,9 +119,19 @@ async def get_alerts(
         )
     )
 
-    alert_list = [AlertResponse(**alert_helper(alert)) for alert in alerts]
+    valid_alerts: List[AlertResponse] = []
+    skipped_count = 0
+    for alert in alerts:
+        parsed_alert = safe_alert_response(alert)
+        if parsed_alert:
+            valid_alerts.append(parsed_alert)
+        else:
+            skipped_count += 1
 
-    return AlertListResponse(alerts=alert_list, total=total)
+    if skipped_count:
+        logger.warning("Skipped %d malformed alert documents", skipped_count)
+
+    return AlertListResponse(alerts=valid_alerts, total=len(valid_alerts))
 
 
 @router.get("/{alert_id}", response_model=AlertResponse)
@@ -146,7 +167,13 @@ async def get_alert(alert_id: str, current_user: dict = Depends(get_current_user
             status_code=status.HTTP_404_NOT_FOUND, detail="Alert not found"
         )
 
-    return AlertResponse(**alert_helper(alert))
+    parsed_alert = safe_alert_response(alert)
+    if not parsed_alert:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Alert document is malformed",
+        )
+    return parsed_alert
 
 
 @router.post("", response_model=AlertResponse, status_code=status.HTTP_201_CREATED)
@@ -187,7 +214,13 @@ async def create_alert(
 
     logger.info(f"Alert created: {result.inserted_id}")
 
-    return AlertResponse(**alert_helper(created_alert))
+    parsed_alert = safe_alert_response(created_alert)
+    if not parsed_alert:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Created alert document is malformed",
+        )
+    return parsed_alert
 
 
 @router.put("/{alert_id}/acknowledge", response_model=AcknowledgeResponse)
@@ -309,7 +342,13 @@ async def resolve_alert(alert_id: str, current_user: dict = Depends(get_current_
 
     logger.info(f"Alert resolved: {alert_id} by {username}")
 
-    return AlertResponse(**alert_helper(updated_alert))
+    parsed_alert = safe_alert_response(updated_alert)
+    if not parsed_alert:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Updated alert document is malformed",
+        )
+    return parsed_alert
 
 
 @router.delete("/{alert_id}", status_code=status.HTTP_204_NO_CONTENT)

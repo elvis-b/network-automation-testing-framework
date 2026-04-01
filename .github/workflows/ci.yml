@@ -161,14 +161,19 @@ jobs:
               upsert=True,
           )
 
+          test_router = db.devices.find_one({"name": "test-router-01"})
+          test_router_id = str(test_router["_id"]) if test_router else "test-router-01"
+
           db.alerts.update_one(
               {"message": "Test alert"},
               {"$set": {
+                  "device_id": test_router_id,
                   "device_name": "test-router-01",
                   "severity": "warning",
                   "type": "performance",
                   "message": "Test alert",
                   "acknowledged": False,
+                  "timestamp": datetime.utcnow(),
               }},
               upsert=True,
           )
@@ -304,9 +309,14 @@ jobs:
           for device in devices:
               db.devices.update_one({"name": device["name"]}, {"$set": device}, upsert=True)
 
+          core_router = db.devices.find_one({"name": "Core-Router-01"})
+          edge_switch = db.devices.find_one({"name": "Edge-Switch-01"})
+          core_router_id = str(core_router["_id"]) if core_router else "Core-Router-01"
+          edge_switch_id = str(edge_switch["_id"]) if edge_switch else "Edge-Switch-01"
+
           alerts = [
-              {"device_name": "Core-Router-01", "severity": "critical", "type": "connectivity", "message": "High packet loss detected", "acknowledged": False, "timestamp": datetime.utcnow()},
-              {"device_name": "Edge-Switch-01", "severity": "warning", "type": "performance", "message": "CPU utilization at 85%", "acknowledged": False, "timestamp": datetime.utcnow()},
+              {"device_id": core_router_id, "device_name": "Core-Router-01", "severity": "critical", "type": "connectivity", "message": "High packet loss detected", "acknowledged": False, "timestamp": datetime.utcnow()},
+              {"device_id": edge_switch_id, "device_name": "Edge-Switch-01", "severity": "warning", "type": "performance", "message": "CPU utilization at 85%", "acknowledged": False, "timestamp": datetime.utcnow()},
           ]
           for alert in alerts:
               db.alerts.update_one({"message": alert["message"]}, {"$set": alert}, upsert=True)
