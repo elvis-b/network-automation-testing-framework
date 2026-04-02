@@ -1,2 +1,0 @@
-INFO:pages.base_page:Navigating to: http://localhost:3001/login
-INFO:tests.conftest:Screenshot saved: test-results/screenshots/tests_integration_test_end_to_end.py_TestUserJourneys_test_login_logout_session_journey[chromium].png
