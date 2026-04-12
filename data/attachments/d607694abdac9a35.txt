@@ -1,0 +1,9 @@
+DEBUG:urllib3.connectionpool:http://localhost:5000 "POST /api/auth/login HTTP/1.1" 200 401
+INFO:tests.conftest:API client authenticated as admin
+DEBUG:urllib3.connectionpool:http://localhost:5000 "POST /api/devices HTTP/1.1" 201 304
+DEBUG:urllib3.connectionpool:http://localhost:5000 "POST /api/devices HTTP/1.1" 201 313
+DEBUG:urllib3.connectionpool:http://localhost:5000 "POST /api/devices HTTP/1.1" 201 313
+DEBUG:urllib3.connectionpool:http://localhost:5000 "GET /api/devices/69dae2779f348c8619895bce HTTP/1.1" 200 304
+DEBUG:urllib3.connectionpool:http://localhost:5000 "GET /api/devices/69dae2779f348c8619895bcf HTTP/1.1" 200 313
+DEBUG:urllib3.connectionpool:http://localhost:5000 "GET /api/devices/69dae2779f348c8619895bd0 HTTP/1.1" 200 313
+DEBUG:urllib3.connectionpool:http://localhost:5000 "POST /api/auth/logout HTTP/1.1" 200 37
