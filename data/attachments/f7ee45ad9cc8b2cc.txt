@@ -1,5 +1,0 @@
-DEBUG    urllib3.connectionpool:connectionpool.py:544 http://localhost:5000 "POST /api/auth/login HTTP/1.1" 200 401
-INFO     tests.conftest:conftest.py:226 API client authenticated as admin
-DEBUG    urllib3.connectionpool:connectionpool.py:544 http://localhost:5000 "POST /api/devices HTTP/1.1" 201 292
-DEBUG    urllib3.connectionpool:connectionpool.py:544 http://localhost:5000 "DELETE /api/devices/69e6c25ee3c3a1fbf433e0e3 HTTP/1.1" 204 0
-DEBUG    urllib3.connectionpool:connectionpool.py:544 http://localhost:5000 "POST /api/auth/logout HTTP/1.1" 200 37
