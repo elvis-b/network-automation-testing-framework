@@ -1,0 +1,8 @@
+INFO:pages.base_page:Navigating to: http://localhost:3000/login
+INFO:pages.login_page:Attempting login with username: admin
+DEBUG:pages.base_page:Filling [data-testid="username-input"] with: admin
+DEBUG:pages.base_page:Filling [data-testid="password-input"] with: admin123
+DEBUG:pages.base_page:Clicking: [data-testid="login-button"]
+INFO:pages.base_page:Navigating to: http://localhost:3000/alerts
+DEBUG:pages.base_page:Clicking: [data-testid="severity-filter"]
+DEBUG:pages.base_page:Clicking: [data-testid="severity-filter"]

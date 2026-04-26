@@ -1,0 +1,1 @@
+INFO     pages.base_page:base_page.py:33 Navigating to: http://localhost:3000/login

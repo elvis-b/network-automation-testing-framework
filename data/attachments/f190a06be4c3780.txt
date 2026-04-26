@@ -1,0 +1,13 @@
+INFO:pages.base_page:Navigating to: http://localhost:3000/login
+INFO:pages.login_page:Attempting login with username: admin
+DEBUG:pages.base_page:Filling [data-testid="username-input"] with: admin
+DEBUG:pages.base_page:Filling [data-testid="password-input"] with: admin123
+DEBUG:pages.base_page:Clicking: [data-testid="login-button"]
+INFO:pages.base_page:Navigating to: http://localhost:3000/devices
+DEBUG:pages.base_page:Clicking: [data-testid="add-device-btn"]
+DEBUG:pages.base_page:Filling [data-testid="device-name-input"] with: test-device-33213e11
+DEBUG:pages.base_page:Filling [data-testid="device-ip-input"] with: 10.88.193.46
+DEBUG:pages.base_page:Clicking: [data-testid="device-type-select"]
+DEBUG:pages.base_page:Clicking: [data-testid="device-status-select"]
+DEBUG:pages.base_page:Clicking: [data-testid="save-device-btn"]
+DEBUG:pages.base_page:Clicking: [data-testid="refresh-btn"]

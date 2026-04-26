@@ -1,0 +1,5 @@
+INFO     pages.base_page:base_page.py:33 Navigating to: http://localhost:3000/login
+DEBUG    pages.base_page:base_page.py:89 Filling [data-testid="username-input"] with: admin
+DEBUG    pages.base_page:base_page.py:89 Filling [data-testid="password-input"] with: admin123
+DEBUG    pages.base_page:base_page.py:70 Clicking: [data-testid="login-button"]
+INFO     tests.conftest:conftest.py:290 MongoDB connection closed

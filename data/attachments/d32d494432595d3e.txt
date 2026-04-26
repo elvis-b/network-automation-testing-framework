@@ -1,0 +1,19 @@
+INFO     pages.base_page:base_page.py:33 Navigating to: http://localhost:3000/login
+INFO     pages.login_page:login_page.py:51 Attempting login with username: admin
+DEBUG    pages.base_page:base_page.py:89 Filling [data-testid="username-input"] with: admin
+DEBUG    pages.base_page:base_page.py:89 Filling [data-testid="password-input"] with: admin123
+DEBUG    pages.base_page:base_page.py:70 Clicking: [data-testid="login-button"]
+DEBUG    urllib3.connectionpool:connectionpool.py:544 http://localhost:5000 "POST /api/auth/login HTTP/1.1" 200 401
+INFO     tests.conftest:conftest.py:226 API client authenticated as admin
+INFO     pages.base_page:base_page.py:33 Navigating to: http://localhost:3000/dashboard
+DEBUG    pages.base_page:base_page.py:70 Clicking: [data-testid="nav-devices"]
+DEBUG    pages.base_page:base_page.py:70 Clicking: [data-testid="add-device-btn"]
+DEBUG    pages.base_page:base_page.py:89 Filling [data-testid="device-name-input"] with: journey-test-c89dd004
+DEBUG    pages.base_page:base_page.py:89 Filling [data-testid="device-ip-input"] with: 10.77.77.1
+DEBUG    pages.base_page:base_page.py:70 Clicking: [data-testid="device-type-select"]
+DEBUG    pages.base_page:base_page.py:70 Clicking: [data-testid="device-status-select"]
+DEBUG    pages.base_page:base_page.py:70 Clicking: [data-testid="save-device-btn"]
+DEBUG    urllib3.connectionpool:connectionpool.py:544 http://localhost:5000 "GET /api/devices?search=journey-test-c89dd004 HTTP/1.1" 200 331
+DEBUG    pages.base_page:base_page.py:89 Filling [data-testid="search-input"] input with: journey-test-c89dd004
+DEBUG    urllib3.connectionpool:connectionpool.py:544 http://localhost:5000 "POST /api/auth/logout HTTP/1.1" 200 37
+DEBUG    tests.conftest:conftest.py:463 Cleaned up test device: 69ee3c4a7b52f928e1fec117

@@ -1,0 +1,1 @@
+INFO:tests.conftest:MongoDB connection closed
