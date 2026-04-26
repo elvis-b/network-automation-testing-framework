@@ -1,0 +1,6 @@
+DEBUG:urllib3.connectionpool:http://localhost:5000 "POST /api/auth/login HTTP/1.1" 200 401
+INFO:tests.conftest:API client authenticated as admin
+DEBUG:urllib3.connectionpool:http://localhost:5000 "POST /api/devices HTTP/1.1" 201 310
+DEBUG:urllib3.connectionpool:http://localhost:5000 "DELETE /api/devices/69ee38ad2ad02f2d2c349c1b HTTP/1.1" 204 0
+DEBUG:urllib3.connectionpool:http://localhost:5000 "GET /api/devices/69ee38ad2ad02f2d2c349c1b HTTP/1.1" 404 29
+DEBUG:urllib3.connectionpool:http://localhost:5000 "POST /api/auth/logout HTTP/1.1" 200 37

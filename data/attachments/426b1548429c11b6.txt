@@ -1,1 +1,0 @@
-WARNING  tests.conftest:conftest.py:376 Failed to connect to csr1000v: Unicon is not able to identify the connection to be used, specify a single connection using the "via" option or multiple connections using device connections/defaults/connections

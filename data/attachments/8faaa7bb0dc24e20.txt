@@ -1,2 +1,0 @@
-DEBUG    asyncio:selector_events.py:54 Using selector: EpollSelector
-INFO     pages.base_page:base_page.py:33 Navigating to: http://localhost:3001/login
