@@ -344,7 +344,7 @@ jobs:
       - name: Wait for services
         run: |
           echo "Waiting for frontend..."
-          timeout 60 bash -c 'until curl -s http://localhost:3000 > /dev/null; do sleep 2; done'
+          timeout 60 bash -c 'until curl -fsS http://localhost:3000 > /dev/null; do sleep 2; done'
           echo "Frontend is ready"
       
       - name: Run UI smoke tests
@@ -519,10 +519,10 @@ jobs:
       - name: Wait for services
         run: |
           echo "Waiting for backend..."
-          timeout 60 bash -c 'until curl -s http://localhost:5000/api/health > /dev/null; do sleep 2; done'
+          timeout 60 bash -c 'until curl -fsS http://localhost:5000/api/health > /dev/null; do sleep 2; done'
           echo "Backend is ready"
           echo "Waiting for frontend..."
-          timeout 60 bash -c 'until curl -s http://localhost:3000 > /dev/null; do sleep 2; done'
+          timeout 60 bash -c 'until curl -fsS http://localhost:3000 > /dev/null; do sleep 2; done'
           echo "Frontend is ready"
       
       - name: Run integration tests
