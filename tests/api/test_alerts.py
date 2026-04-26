@@ -1,6 +1,7 @@
+from datetime import datetime
+
 import pytest
 import requests
-from datetime import datetime
 
 
 @pytest.mark.api
