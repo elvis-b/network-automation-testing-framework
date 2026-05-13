@@ -1,145 +1,39 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
 "
-    Test device hostname retrieval.
-    ","0","test_device_hostname","tests.network","2026-05-12","skipped","2026-05-12","","test_connectivity","",""
-"
-        Test UI behavior during slow network responses.
-
-        Simulates network latency to verify loading states
-        and timeout handling.
-        ","7432","test_handles_network_timeout[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestNetworkMocking","test_network_mocking","",""
-"
-    Test parsing interface status from device.
-
-    Verifies:
-    - Can retrieve interface information
-    - Output is properly parsed
-    - Contains expected interface data
-    ","0","test_interface_status_parsing","tests.network","2026-05-12","skipped","2026-05-12","","test_interfaces","",""
-"
-    Data-driven test: Verify API rejects invalid device data.
-
-    Tests various validation scenarios:
-    - Missing required fields
-    - Invalid data formats
-    - Empty values
-    ","2","test_create_invalid_devices_fails[Invalid IP format should fail]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
-"
-        Test that alert panel is visible on dashboard.
-
-        Verifies:
-        - Alert panel section is visible
-        ","706","test_dashboard_shows_alert_panel[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestDashboardDisplay","test_dashboard","",""
-"
-        Validate GET /devices/{id} returns correctly structured data.
-        ","7","test_get_single_device_schema","tests.api","2026-05-12","passed","2026-05-12","TestDeviceSchemaValidation","test_schema_validation","",""
-"
-    Data-driven test: Create devices with various valid configurations.
-
-    Tests multiple device types, vendors, and configurations
-    using a single test function with parameterized data.
-    ","4","test_create_valid_devices[Branch Router R2]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
-"
-        Test acknowledging an alert that doesn't exist.
+        Test deleting a device that doesn't exist.
 
         Verifies:
         - Returns 404 Not Found
-        ","3","test_acknowledge_nonexistent_alert","tests.api","2026-05-12","passed","2026-05-12","TestResourceNotFoundErrors","test_error_handling","",""
+        ","3","test_delete_nonexistent_device","tests.api","2026-05-13","passed","2026-05-13","TestResourceNotFoundErrors","test_error_handling","",""
 "
-    Test filtering devices by type.
-    ","4","test_get_devices_filter_by_type","tests.api","2026-05-12","passed","2026-05-12","","test_devices","",""
-"
-    Test that unacknowledged alerts are sorted by severity (critical first).
-    ","3","test_alerts_sorted_by_severity","tests.api","2026-05-12","skipped","2026-05-12","","test_alerts","",""
-"
-        Verify that deleting a device via API removes it from MongoDB.
+        Create multiple devices from test data set.
 
-        Flow:
-        1. Create device via API
-        2. Delete device via API
-        3. Verify device no longer exists in MongoDB
-        ","11","test_device_deletion_removes_from_database","tests.integration","2026-05-12","passed","2026-05-12","TestApiDatabaseIntegration","test_end_to_end","",""
+        Verifies bulk creation works and all devices are accessible.
+        ","20","test_create_multiple_devices_sequentially","tests.api","2026-05-13","passed","2026-05-13","TestBulkOperations","test_data_driven","",""
 "
-    Data-driven test: Create devices with various valid configurations.
-
-    Tests multiple device types, vendors, and configurations
-    using a single test function with parameterized data.
-    ","4","test_create_valid_devices[Edge Switch SW2]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
+    Test GET /devices returns list of devices.
+    ","4","test_get_all_devices","tests.api","2026-05-13","passed","2026-05-13","","test_devices","",""
 "
-    Data-driven test: Create devices with various valid configurations.
-
-    Tests multiple device types, vendors, and configurations
-    using a single test function with parameterized data.
-    ","4","test_create_valid_devices[Edge Firewall FW1]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
+    Test GET /devices/{id} returns 400 for invalid ID format.
+    ","2","test_get_device_invalid_id_format","tests.api","2026-05-13","passed","2026-05-13","","test_devices","",""
 "
-    Test filtering devices by status.
-    ","4","test_get_devices_filter_by_status","tests.api","2026-05-12","passed","2026-05-12","","test_devices","",""
+    Test login fails with empty credentials.
+    ","3","test_login_with_empty_credentials","tests.api","2026-05-13","passed","2026-05-13","","test_auth","",""
 "
-        Test accessing protected endpoint without authentication.
-
-        Verifies:
-        - Returns 401 Unauthorized or 403 Forbidden
-        - Response contains appropriate error message
-        ","2","test_access_protected_endpoint_without_token","tests.api","2026-05-12","passed","2026-05-12","TestAuthenticationErrors","test_error_handling","",""
+    Test GET /devices/{id} returns 404 for nonexistent device.
+    ","3","test_get_device_not_found","tests.api","2026-05-13","passed","2026-05-13","","test_devices","",""
 "
-    Data-driven test: Verify device status can be changed.
-
-    Tests various status transition scenarios to ensure
-    the state machine allows valid transitions.
-    ","8","test_device_status_transitions[active->inactive]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
+        Test that AlertResponse schema validates severity levels.
+        ","0","test_alert_severity_validation","tests.api","2026-05-13","passed","2026-05-13","TestAlertSchemaValidation","test_schema_validation","",""
 "
-    Data-driven test: Create devices from external JSON file.
-
-    This pattern allows test data to be maintained separately
-    from test code, enabling:
-    - Non-developers to add test cases
-    - Environment-specific test data
-    - Easy test data updates without code changes
-    ","4","test_devices_from_external_file[core-router-02]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
+    Test acknowledging an already acknowledged alert returns error.
+    ","4","test_acknowledge_already_acknowledged_alert","tests.api","2026-05-13","skipped","2026-05-13","","test_alerts","",""
 "
-        Validate POST /devices returns correctly structured response.
-        ","5","test_create_device_returns_valid_schema","tests.api","2026-05-12","passed","2026-05-12","TestDeviceSchemaValidation","test_schema_validation","",""
+    Test that devices collection exists and is accessible.
+    ","1","test_devices_collection_exists","tests.database","2026-05-13","passed","2026-05-13","","test_consistency","",""
 "
-    Test graceful handling of connection timeout.
-
-    This test verifies the framework handles connection failures gracefully.
-    ","0","test_connection_timeout_handling","tests.network","2026-05-12","passed","2026-05-12","","test_connectivity","",""
-"
-    Data-driven test: Create devices from external JSON file.
-
-    This pattern allows test data to be maintained separately
-    from test code, enabling:
-    - Non-developers to add test cases
-    - Environment-specific test data
-    - Easy test data updates without code changes
-    ","5","test_devices_from_external_file[edge-firewall-01]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
-"
-        Verify dashboard statistics match database counts.
-
-        Flow:
-        1. Count devices and alerts in database
-        2. Navigate to dashboard
-        3. Verify UI counts match database counts
-        ","397","test_dashboard_reflects_database_state[chromium]","tests.integration","2026-05-12","passed","2026-05-12","TestUiApiDatabaseIntegration","test_end_to_end","",""
-"
-    Test that device objects contain expected fields.
-    ","4","test_get_devices_returns_expected_fields","tests.api","2026-05-12","passed","2026-05-12","","test_devices","",""
-"
-    Test acknowledging nonexistent alert returns 404.
-    ","3","test_acknowledge_alert_not_found","tests.api","2026-05-12","passed","2026-05-12","","test_alerts","",""
-"
-        Test that add device dialog opens.
-
-        Verifies:
-        - Clicking Add Device button opens the dialog
-        - Dialog contains required form fields
-        ","548","test_add_device_dialog_opens[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestDeviceCRUD","test_devices","",""
-"
-    Test that device deletion via API removes from MongoDB.
-    ","11","test_device_delete_removes_from_db","tests.database","2026-05-12","passed","2026-05-12","","test_consistency","",""
-"
-    Test PUT /devices/{id} returns 404 for nonexistent device.
-    ","3","test_update_device_not_found","tests.api","2026-05-12","passed","2026-05-12","","test_devices","",""
+        Test that DeviceResponse schema validates status values.
+        ","1","test_device_schema_status_validation","tests.api","2026-05-13","passed","2026-05-13","TestDeviceSchemaValidation","test_schema_validation","",""
 "
         Test that devices page loads with all elements.
 
@@ -147,213 +41,100 @@
         - Add device button is visible
         - Device table is visible
         - Search input is visible
-        ","827","test_devices_page_loads_successfully[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestDevicesPageDisplay","test_devices","",""
-"
-    Data-driven test: Verify API rejects invalid device data.
-
-    Tests various validation scenarios:
-    - Missing required fields
-    - Invalid data formats
-    - Empty values
-    ","3","test_create_invalid_devices_fails[Empty name should fail]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
-"
-    Test login fails with empty credentials.
-    ","3","test_login_with_empty_credentials","tests.api","2026-05-12","passed","2026-05-12","","test_auth","",""
-"
-        Test UI behavior when API returns server error.
-
-        Verifies the application handles errors gracefully
-        without crashing or showing raw error data.
-        ","3824","test_handles_api_500_error_gracefully[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestNetworkMocking","test_network_mocking","",""
-"
-        Parameterized test for creating variable numbers of devices.
-        ","4","test_create_n_devices[1]","tests.api","2026-05-12","passed","2026-05-12","TestBulkOperations","test_data_driven","",""
-"
-        Test that alerts page loads with all elements.
-
-        Verifies:
-        - Active tab is visible
-        - Acknowledged tab is visible
-        - Severity filter is visible
-        ","839","test_alerts_page_loads_successfully[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestAlertsPageDisplay","test_alerts","",""
-"
-        Test accessing endpoint with malformed Authorization header.
-
-        Verifies:
-        - Returns 401 Unauthorized or 403 Forbidden
-        - Handles malformed Authorization header
-        ","2","test_access_with_expired_token_format","tests.api","2026-05-12","passed","2026-05-12","TestAuthenticationErrors","test_error_handling","",""
-"
-    Test POST /devices validates IP address format.
-    ","2","test_create_device_validation_invalid_ip","tests.api","2026-05-12","passed","2026-05-12","","test_devices","",""
-"
-        Test that device list is populated on dashboard.
-
-        Verifies:
-        - Device list section is visible
-        - At least one device is shown (from seed data)
-        ","459","test_dashboard_shows_device_list[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestDashboardDisplay","test_dashboard","",""
-"
-        Test that AlertResponse schema validates severity levels.
-        ","0","test_alert_severity_validation","tests.api","2026-05-12","passed","2026-05-12","TestAlertSchemaValidation","test_schema_validation","",""
-"
-    Data-driven test: Create devices with various valid configurations.
-
-    Tests multiple device types, vendors, and configurations
-    using a single test function with parameterized data.
-    ","4","test_create_valid_devices[Core Router R1]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
-"
-        Test login failure with invalid credentials.
-
-        Verifies:
-        - Error message is displayed for invalid credentials
-        - User stays on login page
-        ","1711","test_login_with_invalid_credentials_shows_error[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestLoginPage","test_login","",""
-"
-        Test that device count is displayed correctly.
-
-        Verifies:
-        - Device count stat card shows a number >= 0
-        ","708","test_dashboard_displays_device_count[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestDashboardDisplay","test_dashboard","",""
-"
-        Test updating device with invalid ObjectId format.
-
-        Verifies:
-        - Returns appropriate error status
-        ","3","test_update_device_invalid_id_format","tests.api","2026-05-12","passed","2026-05-12","TestInvalidIdFormats","test_error_handling","",""
-"
-        Test that password field masks input.
-
-        Verifies:
-        - Password input has type=""password""
-        ","547","test_password_field_is_masked[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestLoginPage","test_login","",""
-"
-        Test that device count is displayed correctly.
-
-        Verifies:
-        - Device count stat card shows a number >= 0
-        ","395","test_dashboard_displays_device_count[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestDashboardDisplay","test_dashboard","",""
-"
-        Test that login button shows loading state during authentication.
-
-        Verifies:
-        - Loading indicator appears during login process
-        ","1224","test_login_button_disabled_during_loading[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestLoginPage","test_login","",""
-"
-    Test device list pagination.
-    ","4","test_get_devices_pagination","tests.api","2026-05-12","passed","2026-05-12","","test_devices","",""
-"
-        Test that device list is populated on dashboard.
-
-        Verifies:
-        - Device list section is visible
-        - At least one device is shown (from seed data)
-        ","713","test_dashboard_shows_device_list[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestDashboardDisplay","test_dashboard","",""
-"
-        Test creating device with very long name.
-
-        Verifies:
-        - Handles long strings appropriately
-        ","2","test_create_device_with_very_long_name","tests.api","2026-05-12","passed","2026-05-12","TestEdgeCases","test_error_handling","",""
-"
-    Test GET /devices/{id} returns 404 for nonexistent device.
-    ","2","test_get_device_not_found","tests.api","2026-05-12","passed","2026-05-12","","test_devices","",""
-"
-        Test accessing endpoint with invalid JWT token.
-
-        Verifies:
-        - Returns 401 Unauthorized
-        - Handles malformed tokens gracefully
-        ","1","test_access_with_invalid_token","tests.api","2026-05-12","passed","2026-05-12","TestAuthenticationErrors","test_error_handling","",""
-"
-    Data-driven test: Verify login handles various credential scenarios.
-
-    Tests:
-    - Valid credentials
-    - Invalid password
-    - Non-existent user
-    - Empty credentials
-    ","305","test_login_scenarios[Wrong password]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
-"GET /alerts/{id} should return 422 for malformed legacy documents.","3","test_get_alert_by_id_returns_422_for_malformed_document","tests.api","2026-05-12","passed","2026-05-12","","test_alerts","",""
-"
-    Test that health endpoint includes database connectivity check.
-    ","2","test_health_endpoint_includes_database_check","tests.api","2026-05-12","passed","2026-05-12","","test_health","",""
-"
-    Test GET /devices returns list of devices.
-    ","4","test_get_all_devices","tests.api","2026-05-12","passed","2026-05-12","","test_devices","",""
-"
-        Test that alert count is displayed correctly.
-
-        Verifies:
-        - Alert count stat card shows a number >= 0
-        ","463","test_dashboard_displays_alert_count[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestDashboardDisplay","test_dashboard","",""
-"
-    Test basic device connectivity to DevNet Sandbox.
-
-    Verifies:
-    - SSH connection can be established
-    - Device is connected and responsive
-    ","0","test_device_connectivity","tests.network","2026-05-12","skipped","2026-05-12","","test_connectivity","",""
+        ","714","test_devices_page_loads_successfully[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestDevicesPageDisplay","test_devices","",""
 "
     Data-driven test: Verify device status can be changed.
 
     Tests various status transition scenarios to ensure
     the state machine allows valid transitions.
-    ","8","test_device_status_transitions[inactive->active]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
+    ","8","test_device_status_transitions[active->inactive]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
 "
-        Test that login button shows loading state during authentication.
+        Validate POST /devices returns correctly structured response.
+        ","5","test_create_device_returns_valid_schema","tests.api","2026-05-13","passed","2026-05-13","TestDeviceSchemaValidation","test_schema_validation","",""
+"
+    Test DELETE /devices/{id} deletes a device.
+    ","10","test_delete_device","tests.api","2026-05-13","passed","2026-05-13","","test_devices","",""
+"
+        Test login validation with empty username.
 
         Verifies:
-        - Loading indicator appears during login process
-        ","1001","test_login_button_disabled_during_loading[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestLoginPage","test_login","",""
+        - Form validation prevents login with empty username
+        ","806","test_login_with_empty_username[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestLoginPage","test_login","",""
 "
-    Data-driven test: Verify API rejects invalid device data.
+    Test that protected endpoints return 401 without authentication.
+    ","1","test_protected_endpoint_without_auth","tests.api","2026-05-13","passed","2026-05-13","","test_auth","",""
+"
+    Test that alert objects contain expected fields.
+    ","3","test_get_alerts_returns_expected_fields","tests.api","2026-05-13","passed","2026-05-13","","test_alerts","",""
+"
+    Data-driven test: Verify device filtering works correctly.
 
-    Tests various validation scenarios:
-    - Missing required fields
-    - Invalid data formats
-    - Empty values
-    ","2","test_create_invalid_devices_fails[Missing device_type should fail]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
+    Tests various filter combinations against the device list endpoint.
+    ","4","test_device_filtering[Filter by active status]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
 "
-        Test creating device with invalid status value.
-
-        Verifies:
-        - Returns 422 Unprocessable Entity or accepts if flexible
-        ","2","test_create_device_with_invalid_status","tests.api","2026-05-12","passed","2026-05-12","TestValidationErrors","test_error_handling","",""
-"
-        Test login with SQL injection attempt.
+        Test successful login with valid credentials.
 
         Verifies:
-        - Application handles injection attempts safely
-        ","2","test_login_with_sql_injection_attempt","tests.api","2026-05-12","passed","2026-05-12","TestEdgeCases","test_error_handling","",""
+        - User can log in with valid credentials
+        - User is redirected to dashboard after login
+        ","950","test_successful_login_redirects_to_dashboard[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestLoginPage","test_login","",""
 "
-    Data-driven test: Verify login handles various credential scenarios.
-
-    Tests:
-    - Valid credentials
-    - Invalid password
-    - Non-existent user
-    - Empty credentials
-    ","2","test_login_scenarios[Empty username]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
-"
-    Test login fails with invalid password.
-    ","306","test_login_with_invalid_password","tests.api","2026-05-12","passed","2026-05-12","","test_auth","",""
-"
-        Test creating device with invalid IP address format.
+        Test that dashboard page loads with all elements.
 
         Verifies:
-        - Returns 422 Unprocessable Entity
-        ","2","test_create_device_invalid_ip_format","tests.api","2026-05-12","passed","2026-05-12","TestValidationErrors","test_error_handling","",""
+        - Dashboard stats cards are visible
+        - Device list is visible
+        - Alert panel is visible
+        ","331","test_dashboard_loads_successfully[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestDashboardDisplay","test_dashboard","",""
 "
-        Test creating device without required fields.
+    Test GET /alerts/{id} returns 404 for nonexistent alert.
+    ","2","test_get_alert_not_found","tests.api","2026-05-13","passed","2026-05-13","","test_alerts","",""
+"
+        Test successful login with valid credentials.
 
         Verifies:
-        - Returns 422 Unprocessable Entity
-        - Response indicates missing fields
-        ","2","test_create_device_missing_required_fields","tests.api","2026-05-12","passed","2026-05-12","TestValidationErrors","test_error_handling","",""
+        - User can log in with valid credentials
+        - User is redirected to dashboard after login
+        ","1184","test_successful_login_redirects_to_dashboard[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestLoginPage","test_login","",""
 "
-    Test that device updates via API are persisted in MongoDB.
-    ","11","test_device_update_reflected_in_db","tests.database","2026-05-12","passed","2026-05-12","","test_consistency","",""
+        Parameterized test for creating variable numbers of devices.
+        ","13","test_create_n_devices[3]","tests.api","2026-05-13","passed","2026-05-13","TestBulkOperations","test_data_driven","",""
+"
+    Test filtering devices by status.
+    ","4","test_get_devices_filter_by_status","tests.api","2026-05-13","passed","2026-05-13","","test_devices","",""
+"
+    Test filtering devices by type.
+    ","4","test_get_devices_filter_by_type","tests.api","2026-05-13","passed","2026-05-13","","test_devices","",""
+"
+        Test that device count is displayed correctly.
+
+        Verifies:
+        - Device count stat card shows a number >= 0
+        ","469","test_dashboard_displays_device_count[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestDashboardDisplay","test_dashboard","",""
+"
+        Verify that deleting a device via API removes it from MongoDB.
+
+        Flow:
+        1. Create device via API
+        2. Delete device via API
+        3. Verify device no longer exists in MongoDB
+        ","9","test_device_deletion_removes_from_database","tests.integration","2026-05-13","passed","2026-05-13","TestApiDatabaseIntegration","test_end_to_end","",""
+"
+    Data-driven test: Create devices from external JSON file.
+
+    This pattern allows test data to be maintained separately
+    from test code, enabling:
+    - Non-developers to add test cases
+    - Environment-specific test data
+    - Easy test data updates without code changes
+    ","5","test_devices_from_external_file[core-router-02]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
+"
+        Test that add device dialog opens.
+
+        Verifies:
+        - Clicking Add Device button opens the dialog
+        - Dialog contains required form fields
+        ","522","test_add_device_dialog_opens[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestDeviceCRUD","test_devices","",""
 "
         Verify the complete alert acknowledgment workflow.
 
@@ -362,97 +143,35 @@
         2. Acknowledge an alert via API
         3. Verify acknowledgment status in database
         4. Verify alert moves to acknowledged list
-        ","4","test_alert_acknowledgment_flow","tests.integration","2026-05-12","skipped","2026-05-12","TestAlertWorkflowIntegration","test_end_to_end","",""
+        ","4","test_alert_acknowledgment_flow","tests.integration","2026-05-13","skipped","2026-05-13","TestAlertWorkflowIntegration","test_end_to_end","",""
 "
-        Verify adding device via UI persists to database.
+    Test the readiness probe endpoint.
+    ","2","test_readiness_endpoint","tests.api","2026-05-13","passed","2026-05-13","","test_health","",""
+"
+    Data-driven test: Verify login handles various credential scenarios.
 
-        Flow:
-        1. Navigate to devices page
-        2. Add device via UI form
-        3. Verify device appears in UI
-        4. Verify device exists in database
-        ","4646","test_add_device_ui_to_database[chromium]","tests.integration","2026-05-12","passed","2026-05-12","TestUiApiDatabaseIntegration","test_end_to_end","",""
+    Tests:
+    - Valid credentials
+    - Invalid password
+    - Non-existent user
+    - Empty credentials
+    ","270","test_login_scenarios[Empty password]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
+"GET /alerts/{id} should return 422 for malformed legacy documents.","4","test_get_alert_by_id_returns_422_for_malformed_document","tests.api","2026-05-13","passed","2026-05-13","","test_alerts","",""
 "
-        Verify that updating a device via API persists correctly to MongoDB.
-
-        Flow:
-        1. Create device via API
-        2. Update device via API
-        3. Verify changes in MongoDB
-        ","13","test_device_update_persists_to_database","tests.integration","2026-05-12","passed","2026-05-12","TestApiDatabaseIntegration","test_end_to_end","",""
+    Test device is reachable and responding to commands.
+    ","0","test_device_reachability","tests.network","2026-05-13","skipped","2026-05-13","","test_connectivity","",""
 "
-        Test UI displays appropriate message for empty data.
-        ","3615","test_mock_empty_device_list[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestNetworkMocking","test_network_mocking","",""
-"
-    Test retrieving detailed interface information.
-    ","0","test_interface_detailed_info","tests.network","2026-05-12","skipped","2026-05-12","","test_interfaces","",""
-"
-        Test login validation with empty password.
+        Test that device table shows devices from database.
 
         Verifies:
-        - Form validation prevents login with empty password
-        ","899","test_login_with_empty_password[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestLoginPage","test_login","",""
+        - Device table contains at least one device (seed data)
+        ","687","test_devices_table_displays_devices[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestDevicesPageDisplay","test_devices","",""
 "
-    Test that device count from API matches database count.
-    ","5","test_device_count_matches_api","tests.database","2026-05-12","passed","2026-05-12","","test_consistency","",""
-"
-        Validate /health returns correctly structured data.
-        ","2","test_health_endpoint_schema","tests.api","2026-05-12","passed","2026-05-12","TestHealthSchemaValidation","test_schema_validation","",""
-"
-    Test that protected endpoints reject invalid tokens.
-    ","2","test_protected_endpoint_with_invalid_token","tests.api","2026-05-12","passed","2026-05-12","","test_auth","",""
-"
-        Test complete device management user journey.
-
-        User Story:
-        As a network administrator, I want to:
-        1. Log in to the dashboard
-        2. View existing devices
-        3. Add a new device
-        4. Verify the device appears in the list
-        5. Navigate back to dashboard and see updated count
-        ","4505","test_complete_device_management_journey[chromium]","tests.integration","2026-05-12","passed","2026-05-12","TestUserJourneys","test_end_to_end","",""
-"
-    Test PUT /devices/{id} updates a device.
-    ","8","test_update_device","tests.api","2026-05-12","passed","2026-05-12","","test_devices","",""
-"
-        Test UI behavior when API returns 404.
-        ","1492","test_handles_api_404_not_found[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestNetworkMocking","test_network_mocking","",""
-"
-        Test that login page loads with all required elements.
+        Test fetching an alert that doesn't exist.
 
         Verifies:
-        - Username input is visible
-        - Password input is visible
-        - Login button is visible
-        - Logo is displayed
-        ","549","test_login_page_loads_successfully[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestLoginPage","test_login","",""
-"
-    Test PUT /alerts/{id}/acknowledge acknowledges an alert.
-    ","4","test_acknowledge_alert","tests.api","2026-05-12","skipped","2026-05-12","","test_alerts","",""
-"
-        Validate GET /devices returns correctly structured data.
-
-        Each device in the response must conform to DeviceResponse schema.
-        ","5","test_get_devices_returns_valid_schema","tests.api","2026-05-12","passed","2026-05-12","TestDeviceSchemaValidation","test_schema_validation","",""
-"
-    Test that API response matches database record.
-    ","4","test_api_device_matches_db_record","tests.database","2026-05-12","passed","2026-05-12","","test_consistency","",""
-"
-    Data-driven test: Verify device status can be changed.
-
-    Tests various status transition scenarios to ensure
-    the state machine allows valid transitions.
-    ","9","test_device_status_transitions[active->maintenance]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
-"
-    Data-driven test: Create devices from external JSON file.
-
-    This pattern allows test data to be maintained separately
-    from test code, enabling:
-    - Non-developers to add test cases
-    - Environment-specific test data
-    - Easy test data updates without code changes
-    ","4","test_devices_from_external_file[core-router-01]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
+        - Returns 404 Not Found
+        ","3","test_get_nonexistent_alert","tests.api","2026-05-13","passed","2026-05-13","TestResourceNotFoundErrors","test_error_handling","",""
 "
     Data-driven test: Verify API rejects invalid device data.
 
@@ -460,12 +179,58 @@
     - Missing required fields
     - Invalid data formats
     - Empty values
-    ","2","test_create_invalid_devices_fails[Missing name should fail]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
+    ","2","test_create_invalid_devices_fails[Invalid IP format should fail]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
 "
-    Data-driven test: Verify device filtering works correctly.
+        Test that login button shows loading state during authentication.
 
-    Tests various filter combinations against the device list endpoint.
-    ","4","test_device_filtering[Filter by Cisco vendor]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
+        Verifies:
+        - Loading indicator appears during login process
+        ","894","test_login_button_disabled_during_loading[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestLoginPage","test_login","",""
+"
+        Test that device list is populated on dashboard.
+
+        Verifies:
+        - Device list section is visible
+        - At least one device is shown (from seed data)
+        ","671","test_dashboard_shows_device_list[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestDashboardDisplay","test_dashboard","",""
+"
+        Verify dashboard statistics match database counts.
+
+        Flow:
+        1. Count devices and alerts in database
+        2. Navigate to dashboard
+        3. Verify UI counts match database counts
+        ","409","test_dashboard_reflects_database_state[chromium]","tests.integration","2026-05-13","passed","2026-05-13","TestUiApiDatabaseIntegration","test_end_to_end","",""
+"
+    Test basic device connectivity to DevNet Sandbox.
+
+    Verifies:
+    - SSH connection can be established
+    - Device is connected and responsive
+    ","0","test_device_connectivity","tests.network","2026-05-13","skipped","2026-05-13","","test_connectivity","",""
+"
+        Test creating device with special characters in name.
+
+        Verifies:
+        - Handles special characters appropriately
+        ","5","test_create_device_with_special_characters","tests.api","2026-05-13","passed","2026-05-13","TestEdgeCases","test_error_handling","",""
+"
+    Data-driven test: Verify API rejects invalid device data.
+
+    Tests various validation scenarios:
+    - Missing required fields
+    - Invalid data formats
+    - Empty values
+    ","2","test_create_invalid_devices_fails[Missing device_type should fail]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
+"
+        Test that alert list shows alerts from database.
+
+        Verifies:
+        - Alert list loads without errors
+        ","725","test_alerts_list_displays_alerts[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestAlertsPageDisplay","test_alerts","",""
+"
+    Test login fails with invalid password.
+    ","271","test_login_with_invalid_password","tests.api","2026-05-13","passed","2026-05-13","","test_auth","",""
 "
         Test that alerts page loads with all elements.
 
@@ -473,10 +238,38 @@
         - Active tab is visible
         - Acknowledged tab is visible
         - Severity filter is visible
-        ","657","test_alerts_page_loads_successfully[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestAlertsPageDisplay","test_alerts","",""
+        ","508","test_alerts_page_loads_successfully[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestAlertsPageDisplay","test_alerts","",""
 "
-        Test UI displays appropriate message for empty data.
-        ","3029","test_mock_empty_device_list[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestNetworkMocking","test_network_mocking","",""
+        Test that alert count is displayed correctly.
+
+        Verifies:
+        - Alert count stat card shows a number >= 0
+        ","676","test_dashboard_displays_alert_count[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestDashboardDisplay","test_dashboard","",""
+"
+    Data-driven test: Verify device filtering works correctly.
+
+    Tests various filter combinations against the device list endpoint.
+    ","3","test_device_filtering[Filter by router type]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
+"
+    Test parsing interface status from device.
+
+    Verifies:
+    - Can retrieve interface information
+    - Output is properly parsed
+    - Contains expected interface data
+    ","0","test_interface_status_parsing","tests.network","2026-05-13","skipped","2026-05-13","","test_interfaces","",""
+"
+        Test creating device with very long name.
+
+        Verifies:
+        - Handles long strings appropriately
+        ","2","test_create_device_with_very_long_name","tests.api","2026-05-13","passed","2026-05-13","TestEdgeCases","test_error_handling","",""
+"
+    Data-driven test: Create devices with various valid configurations.
+
+    Tests multiple device types, vendors, and configurations
+    using a single test function with parameterized data.
+    ","5","test_create_valid_devices[Core Router R1]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
 "
         Test that dashboard page loads with all elements.
 
@@ -484,49 +277,112 @@
         - Dashboard stats cards are visible
         - Device list is visible
         - Alert panel is visible
-        ","626","test_dashboard_loads_successfully[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestDashboardDisplay","test_dashboard","",""
+        ","692","test_dashboard_loads_successfully[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestDashboardDisplay","test_dashboard","",""
+"
+    Test that unacknowledged alerts are sorted by severity (critical first).
+    ","3","test_alerts_sorted_by_severity","tests.api","2026-05-13","skipped","2026-05-13","","test_alerts","",""
+"
+    Data-driven test: Verify device status can be changed.
+
+    Tests various status transition scenarios to ensure
+    the state machine allows valid transitions.
+    ","10","test_device_status_transitions[maintenance->active]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
+"GET /alerts should tolerate malformed legacy documents.","7","test_get_alerts_skips_malformed_legacy_documents","tests.api","2026-05-13","passed","2026-05-13","","test_alerts","",""
+"
+    Test that device deletion via API removes from MongoDB.
+    ","10","test_device_delete_removes_from_db","tests.database","2026-05-13","passed","2026-05-13","","test_consistency","",""
+"
+        Test POST request with empty body.
+
+        Verifies:
+        - Returns appropriate validation error
+        ","2","test_empty_request_body","tests.api","2026-05-13","passed","2026-05-13","TestEdgeCases","test_error_handling","",""
+"
+    Data-driven test: Verify API rejects invalid device data.
+
+    Tests various validation scenarios:
+    - Missing required fields
+    - Invalid data formats
+    - Empty values
+    ","2","test_create_invalid_devices_fails[Missing name should fail]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
+"
+    Test PUT /devices/{id} returns 404 for nonexistent device.
+    ","3","test_update_device_not_found","tests.api","2026-05-13","passed","2026-05-13","","test_devices","",""
+"
+    Test that health endpoint returns healthy status.
+    ","2","test_health_endpoint_returns_healthy_status","tests.api","2026-05-13","passed","2026-05-13","","test_health","",""
+"
+    Test acknowledging nonexistent alert returns 404.
+    ","3","test_acknowledge_alert_not_found","tests.api","2026-05-13","passed","2026-05-13","","test_alerts","",""
+"
+        Mock API to return controlled test data.
+
+        This allows testing UI rendering with predictable data,
+        independent of backend state.
+        ","3401","test_mock_devices_api_response[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestNetworkMocking","test_network_mocking","",""
+"
+    Data-driven test: Verify API rejects invalid device data.
+
+    Tests various validation scenarios:
+    - Missing required fields
+    - Invalid data formats
+    - Empty values
+    ","2","test_create_invalid_devices_fails[Empty name should fail]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
+"
+    Test that at least one interface is in 'up' status.
+    ","0","test_at_least_one_interface_up","tests.network","2026-05-13","skipped","2026-05-13","","test_interfaces","",""
+"
+        Test updating device with invalid ObjectId format.
+
+        Verifies:
+        - Returns appropriate error status
+        ","2","test_update_device_invalid_id_format","tests.api","2026-05-13","passed","2026-05-13","TestInvalidIdFormats","test_error_handling","",""
 "
     Test filtering alerts by severity.
-    ","4","test_get_alerts_filter_by_severity","tests.api","2026-05-12","passed","2026-05-12","","test_alerts","",""
+    ","4","test_get_alerts_filter_by_severity","tests.api","2026-05-13","passed","2026-05-13","","test_alerts","",""
+"
+        Test UI displays appropriate message for empty data.
+        ","3264","test_mock_empty_device_list[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestNetworkMocking","test_network_mocking","",""
+"
+        Test creating device with invalid device type.
+
+        Verifies:
+        - Returns 422 Unprocessable Entity or accepts if flexible
+        ","2","test_create_device_invalid_device_type","tests.api","2026-05-13","passed","2026-05-13","TestValidationErrors","test_error_handling","",""
+"
+        Test that device list is populated on dashboard.
+
+        Verifies:
+        - Device list section is visible
+        - At least one device is shown (from seed data)
+        ","451","test_dashboard_shows_device_list[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestDashboardDisplay","test_dashboard","",""
+"
+        Validate POST /auth/login returns correctly structured token.
+        ","272","test_login_returns_valid_token_schema","tests.api","2026-05-13","passed","2026-05-13","TestAuthSchemaValidation","test_schema_validation","",""
+"
+        Test that password field masks input.
+
+        Verifies:
+        - Password input has type=""password""
+        ","714","test_password_field_is_masked[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestLoginPage","test_login","",""
 "
         Test login validation with empty password.
 
         Verifies:
         - Form validation prevents login with empty password
-        ","667","test_login_with_empty_password[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestLoginPage","test_login","",""
-"
-    Test POST /devices creates a new device.
-    ","5","test_create_device","tests.api","2026-05-12","passed","2026-05-12","","test_devices","",""
-"
-    Test DELETE /devices/{id} returns 404 for nonexistent device.
-    ","2","test_delete_device_not_found","tests.api","2026-05-12","passed","2026-05-12","","test_devices","",""
-"
-        Parameterized test for creating variable numbers of devices.
-        ","20","test_create_n_devices[5]","tests.api","2026-05-12","passed","2026-05-12","TestBulkOperations","test_data_driven","",""
+        ","800","test_login_with_empty_password[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestLoginPage","test_login","",""
 "
     Data-driven test: Create devices with various valid configurations.
 
     Tests multiple device types, vendors, and configurations
     using a single test function with parameterized data.
-    ","5","test_create_valid_devices[Distribution Switch SW1]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
+    ","5","test_create_valid_devices[Edge Firewall FW1]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
 "
-    Test that devices collection exists and is accessible.
-    ","1","test_devices_collection_exists","tests.database","2026-05-12","passed","2026-05-12","","test_consistency","",""
+    Test that protected endpoints reject invalid tokens.
+    ","1","test_protected_endpoint_with_invalid_token","tests.api","2026-05-13","passed","2026-05-13","","test_auth","",""
 "
-    Test GET /devices/{id} returns specific device.
-    ","6","test_get_device_by_id","tests.api","2026-05-12","passed","2026-05-12","","test_devices","",""
-"
-        Test UI behavior when API returns server error.
-
-        Verifies the application handles errors gracefully
-        without crashing or showing raw error data.
-        ","3424","test_handles_api_500_error_gracefully[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestNetworkMocking","test_network_mocking","",""
-"
-        Test that DeviceResponse schema validates IP addresses.
-        ","0","test_device_schema_ip_validation","tests.api","2026-05-12","passed","2026-05-12","TestDeviceSchemaValidation","test_schema_validation","",""
-"
-    Test GET /devices/{id} returns 400 for invalid ID format.
-    ","2","test_get_device_invalid_id_format","tests.api","2026-05-12","passed","2026-05-12","","test_devices","",""
+    Test that device objects contain expected fields.
+    ","5","test_get_devices_returns_expected_fields","tests.api","2026-05-13","passed","2026-05-13","","test_devices","",""
 "
     Data-driven test: Verify login handles various credential scenarios.
 
@@ -535,7 +391,15 @@
     - Invalid password
     - Non-existent user
     - Empty credentials
-    ","306","test_login_scenarios[Valid credentials]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
+    ","3","test_login_scenarios[Non-existent user]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
+"
+    Test that API response matches database record.
+    ","5","test_api_device_matches_db_record","tests.database","2026-05-13","passed","2026-05-13","","test_consistency","",""
+"
+    Test that health endpoint returns 200 OK.
+
+    This is the most basic smoke test to verify the API is running.
+    ","3","test_health_endpoint_returns_200","tests.api","2026-05-13","passed","2026-05-13","","test_health","",""
 "
     Data-driven test: Create devices from external JSON file.
 
@@ -544,144 +408,27 @@
     - Non-developers to add test cases
     - Environment-specific test data
     - Easy test data updates without code changes
-    ","4","test_devices_from_external_file[dist-switch-01]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
+    ","5","test_devices_from_external_file[dist-switch-01]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
 "
-    Data-driven test: Create devices from external JSON file.
-
-    This pattern allows test data to be maintained separately
-    from test code, enabling:
-    - Non-developers to add test cases
-    - Environment-specific test data
-    - Easy test data updates without code changes
-    ","5","test_devices_from_external_file[dist-switch-02]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
-"
-        Test login validation with empty username.
-
-        Verifies:
-        - Form validation prevents login with empty username
-        ","638","test_login_with_empty_username[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestLoginPage","test_login","",""
-"
-        Test that alert count is displayed correctly.
-
-        Verifies:
-        - Alert count stat card shows a number >= 0
-        ","699","test_dashboard_displays_alert_count[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestDashboardDisplay","test_dashboard","",""
-"
-    Test POST /devices rejects duplicate device names.
-    ","7","test_create_device_duplicate_name","tests.api","2026-05-12","passed","2026-05-12","","test_devices","",""
-"
-    Test login fails with nonexistent username.
-    ","3","test_login_with_nonexistent_user","tests.api","2026-05-12","passed","2026-05-12","","test_auth","",""
-"
-        Test login failure with invalid credentials.
-
-        Verifies:
-        - Error message is displayed for invalid credentials
-        - User stays on login page
-        ","1885","test_login_with_invalid_credentials_shows_error[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestLoginPage","test_login","",""
-"
-        Test creating device with special characters in name.
-
-        Verifies:
-        - Handles special characters appropriately
-        ","5","test_create_device_with_special_characters","tests.api","2026-05-12","passed","2026-05-12","TestEdgeCases","test_error_handling","",""
-"
-        Validate GET /alerts returns correctly structured data.
-        ","4","test_get_alerts_returns_valid_schema","tests.api","2026-05-12","passed","2026-05-12","TestAlertSchemaValidation","test_schema_validation","",""
-"
-    Test GET /alerts/{id} returns specific alert.
-    ","4","test_get_alert_by_id","tests.api","2026-05-12","skipped","2026-05-12","","test_alerts","",""
-"
-        Test successful login with valid credentials.
-
-        Verifies:
-        - User can log in with valid credentials
-        - User is redirected to dashboard after login
-        ","1204","test_successful_login_redirects_to_dashboard[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestLoginPage","test_login","",""
+    Test GET /devices/{id} returns specific device.
+    ","7","test_get_device_by_id","tests.api","2026-05-13","passed","2026-05-13","","test_devices","",""
 "
         Test fetching a device that doesn't exist.
 
         Verifies:
         - Returns 404 Not Found
         - Response contains appropriate error message
-        ","3","test_get_nonexistent_device","tests.api","2026-05-12","passed","2026-05-12","TestResourceNotFoundErrors","test_error_handling","",""
+        ","3","test_get_nonexistent_device","tests.api","2026-05-13","passed","2026-05-13","TestResourceNotFoundErrors","test_error_handling","",""
 "
-        Verify all device fields are correctly transmitted from DB to API.
-        ","1","test_device_fields_integrity","tests.integration","2026-05-12","skipped","2026-05-12","TestDataConsistency","test_end_to_end","",""
+        Validate GET /alerts returns correctly structured data.
+        ","3","test_get_alerts_returns_valid_schema","tests.api","2026-05-13","passed","2026-05-13","TestAlertSchemaValidation","test_schema_validation","",""
 "
-        Test login validation with empty username.
+        Test accessing protected endpoint without authentication.
 
         Verifies:
-        - Form validation prevents login with empty username
-        ","824","test_login_with_empty_username[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestLoginPage","test_login","",""
-"
-    Test retrieving interface IP addresses.
-    ","0","test_interface_ip_addresses","tests.network","2026-05-12","skipped","2026-05-12","","test_interfaces","",""
-"
-    Test retrieving and parsing device version information.
-    ","0","test_device_version_info","tests.network","2026-05-12","skipped","2026-05-12","","test_connectivity","",""
-"
-        Test that add device dialog opens.
-
-        Verifies:
-        - Clicking Add Device button opens the dialog
-        - Dialog contains required form fields
-        ","934","test_add_device_dialog_opens[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestDeviceCRUD","test_devices","",""
-"
-    Test login fails when password is missing.
-    ","2","test_login_missing_password","tests.api","2026-05-12","passed","2026-05-12","","test_auth","",""
-"
-        Test fetching device with invalid ObjectId format.
-
-        Verifies:
-        - Returns 400 Bad Request or 404 Not Found
-        ","2","test_get_device_invalid_id_format","tests.api","2026-05-12","passed","2026-05-12","TestInvalidIdFormats","test_error_handling","",""
-"
-        Test that DeviceResponse schema validates status values.
-        ","0","test_device_schema_status_validation","tests.api","2026-05-12","passed","2026-05-12","TestDeviceSchemaValidation","test_schema_validation","",""
-"
-        Test that device table shows devices from database.
-
-        Verifies:
-        - Device table contains at least one device (seed data)
-        ","461","test_devices_table_displays_devices[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestDevicesPageDisplay","test_devices","",""
-"
-    Data-driven test: Verify device filtering works correctly.
-
-    Tests various filter combinations against the device list endpoint.
-    ","4","test_device_filtering[Filter by router type]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
-"
-        Test POST request with empty body.
-
-        Verifies:
-        - Returns appropriate validation error
-        ","2","test_empty_request_body","tests.api","2026-05-12","passed","2026-05-12","TestEdgeCases","test_error_handling","",""
-"
-        Create multiple devices from test data set.
-
-        Verifies bulk creation works and all devices are accessible.
-        ","19","test_create_multiple_devices_sequentially","tests.api","2026-05-12","passed","2026-05-12","TestBulkOperations","test_data_driven","",""
-"
-    Test that alert objects contain expected fields.
-    ","4","test_get_alerts_returns_expected_fields","tests.api","2026-05-12","passed","2026-05-12","","test_alerts","",""
-"
-        Test updating a device that doesn't exist.
-
-        Verifies:
-        - Returns 404 Not Found
-        ","3","test_update_nonexistent_device","tests.api","2026-05-12","passed","2026-05-12","TestResourceNotFoundErrors","test_error_handling","",""
-"
-    Test retrieving interface counters (slow test due to data volume).
-    ","0","test_all_interface_counters","tests.network","2026-05-12","skipped","2026-05-12","","test_interfaces","",""
-"
-    Test logout endpoint.
-    ","2","test_logout","tests.api","2026-05-12","passed","2026-05-12","","test_auth","",""
-"
-    Test GET /alerts/{id} returns 404 for nonexistent alert.
-    ","3","test_get_alert_not_found","tests.api","2026-05-12","passed","2026-05-12","","test_alerts","",""
-"
-        Test UI behavior when API returns 404.
-        ","1218","test_handles_api_404_not_found[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestNetworkMocking","test_network_mocking","",""
+        - Returns 401 Unauthorized or 403 Forbidden
+        - Response contains appropriate error message
+        ","1","test_access_protected_endpoint_without_token","tests.api","2026-05-13","passed","2026-05-13","TestAuthenticationErrors","test_error_handling","",""
 "
         Verify API responses accurately reflect database state.
 
@@ -689,169 +436,64 @@
         1. Fetch devices via API
         2. Query database directly
         3. Verify counts and data match
-        ","5","test_api_response_matches_database","tests.integration","2026-05-12","passed","2026-05-12","TestDataConsistency","test_end_to_end","",""
+        ","4","test_api_response_matches_database","tests.integration","2026-05-13","passed","2026-05-13","TestDataConsistency","test_end_to_end","",""
 "
-    Test that alert acknowledgment is persisted in database.
-    ","1","test_alert_acknowledgment_persisted","tests.database","2026-05-12","skipped","2026-05-12","","test_consistency","",""
+    Test device hostname retrieval.
+    ","0","test_device_hostname","tests.network","2026-05-13","skipped","2026-05-13","","test_connectivity","",""
 "
         Test UI behavior during slow network responses.
 
         Simulates network latency to verify loading states
         and timeout handling.
-        ","10158","test_handles_network_timeout[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestNetworkMocking","test_network_mocking","",""
-"
-    Test that protected endpoints return 401 without authentication.
-    ","1","test_protected_endpoint_without_auth","tests.api","2026-05-12","passed","2026-05-12","","test_auth","",""
-"
-        Test that devices page loads with all elements.
-
-        Verifies:
-        - Add device button is visible
-        - Device table is visible
-        - Search input is visible
-        ","482","test_devices_page_loads_successfully[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestDevicesPageDisplay","test_devices","",""
-"
-        Test that device table shows devices from database.
-
-        Verifies:
-        - Device table contains at least one device (seed data)
-        ","731","test_devices_table_displays_devices[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestDevicesPageDisplay","test_devices","",""
-"
-    Test that timestamps in database are valid and recent.
-    ","1","test_timestamps_are_valid","tests.database","2026-05-12","passed","2026-05-12","","test_consistency","",""
-"
-    Test the liveness probe endpoint.
-    ","2","test_liveness_endpoint","tests.api","2026-05-12","passed","2026-05-12","","test_health","",""
-"
-    Test the readiness probe endpoint.
-    ","2","test_readiness_endpoint","tests.api","2026-05-12","passed","2026-05-12","","test_health","",""
-"
-    Data-driven test: Verify login handles various credential scenarios.
-
-    Tests:
-    - Valid credentials
-    - Invalid password
-    - Non-existent user
-    - Empty credentials
-    ","305","test_login_scenarios[Empty password]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
-"
-        Test that alert panel is visible on dashboard.
-
-        Verifies:
-        - Alert panel section is visible
-        ","439","test_dashboard_shows_alert_panel[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestDashboardDisplay","test_dashboard","",""
-"
-    Test GET /alerts returns list of alerts.
-    ","3","test_get_all_alerts","tests.api","2026-05-12","passed","2026-05-12","","test_alerts","",""
-"
-    Data-driven test: Verify device filtering works correctly.
-
-    Tests various filter combinations against the device list endpoint.
-    ","4","test_device_filtering[Filter by active status]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
-"
-    Data-driven test: Verify login handles various credential scenarios.
-
-    Tests:
-    - Valid credentials
-    - Invalid password
-    - Non-existent user
-    - Empty credentials
-    ","3","test_login_scenarios[Non-existent user]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
-"
-        Test deleting device with invalid ObjectId format.
-
-        Verifies:
-        - Returns appropriate error status
-        ","2","test_delete_device_invalid_id_format","tests.api","2026-05-12","passed","2026-05-12","TestInvalidIdFormats","test_error_handling","",""
-"
-    Test acknowledging an already acknowledged alert returns error.
-    ","4","test_acknowledge_already_acknowledged_alert","tests.api","2026-05-12","skipped","2026-05-12","","test_alerts","",""
-"
-        Test login endpoint with invalid JSON payload.
-
-        Verifies:
-        - Returns 422 Unprocessable Entity
-        ","2","test_login_with_invalid_json","tests.api","2026-05-12","passed","2026-05-12","TestAuthenticationErrors","test_error_handling","",""
-"
-        Mock API to return controlled test data.
-
-        This allows testing UI rendering with predictable data,
-        independent of backend state.
-        ","3381","test_mock_devices_api_response[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestNetworkMocking","test_network_mocking","",""
+        ","13133","test_handles_network_timeout[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestNetworkMocking","test_network_mocking","",""
 "
         Test that password field masks input.
 
         Verifies:
         - Password input has type=""password""
-        ","641","test_password_field_is_masked[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestLoginPage","test_login","",""
+        ","487","test_password_field_is_masked[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestLoginPage","test_login","",""
 "
-    Test POST /devices validates required fields.
-    ","3","test_create_device_validation_missing_required","tests.api","2026-05-12","passed","2026-05-12","","test_devices","",""
+        Test UI behavior during slow network responses.
+
+        Simulates network latency to verify loading states
+        and timeout handling.
+        ","7362","test_handles_network_timeout[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestNetworkMocking","test_network_mocking","",""
 "
-        Test successful login with valid credentials.
+        Test creating device with invalid status value.
 
         Verifies:
-        - User can log in with valid credentials
-        - User is redirected to dashboard after login
-        ","1077","test_successful_login_redirects_to_dashboard[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestLoginPage","test_login","",""
+        - Returns 422 Unprocessable Entity or accepts if flexible
+        ","2","test_create_device_with_invalid_status","tests.api","2026-05-13","passed","2026-05-13","TestValidationErrors","test_error_handling","",""
 "
-    Test POST /alerts creates a new alert.
-    ","4","test_create_alert","tests.api","2026-05-12","passed","2026-05-12","","test_alerts","",""
-"
-    Test device is reachable and responding to commands.
-    ","0","test_device_reachability","tests.network","2026-05-12","skipped","2026-05-12","","test_connectivity","",""
-"
-        Test that login page loads with all required elements.
+        Test login validation with empty password.
 
         Verifies:
-        - Username input is visible
-        - Password input is visible
-        - Login button is visible
-        - Logo is displayed
-        ","688","test_login_page_loads_successfully[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestLoginPage","test_login","",""
+        - Form validation prevents login with empty password
+        ","612","test_login_with_empty_password[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestLoginPage","test_login","",""
 "
-    Test getting current user information.
-    ","3","test_get_current_user","tests.api","2026-05-12","passed","2026-05-12","","test_auth","",""
+    Test GET /alerts returns list of alerts.
+    ","4","test_get_all_alerts","tests.api","2026-05-13","passed","2026-05-13","","test_alerts","",""
 "
-    Test filtering alerts by acknowledgment status.
-    ","3","test_get_alerts_filter_by_acknowledged","tests.api","2026-05-12","passed","2026-05-12","","test_alerts","",""
-"GET /alerts should tolerate malformed legacy documents.","4","test_get_alerts_skips_malformed_legacy_documents","tests.api","2026-05-12","passed","2026-05-12","","test_alerts","",""
-"
-        Test complete login/logout session journey.
-
-        User Story:
-        As a user, I want to:
-        1. Log in with valid credentials
-        2. Navigate through the application
-        3. Log out
-        4. Verify I cannot access protected pages
-        ","3505","test_login_logout_session_journey[chromium]","tests.integration","2026-05-12","passed","2026-05-12","TestUserJourneys","test_end_to_end","",""
-"
-        Test fetching an alert that doesn't exist.
+        Test login with SQL injection attempt.
 
         Verifies:
-        - Returns 404 Not Found
-        ","3","test_get_nonexistent_alert","tests.api","2026-05-12","passed","2026-05-12","TestResourceNotFoundErrors","test_error_handling","",""
+        - Application handles injection attempts safely
+        ","2","test_login_with_sql_injection_attempt","tests.api","2026-05-13","passed","2026-05-13","TestEdgeCases","test_error_handling","",""
 "
-    Test DELETE /devices/{id} deletes a device.
-    ","10","test_delete_device","tests.api","2026-05-12","passed","2026-05-12","","test_devices","",""
-"
-    Test that health endpoint returns 200 OK.
+    Data-driven test: Verify device status can be changed.
 
-    This is the most basic smoke test to verify the API is running.
-    ","2","test_health_endpoint_returns_200","tests.api","2026-05-12","passed","2026-05-12","","test_health","",""
+    Tests various status transition scenarios to ensure
+    the state machine allows valid transitions.
+    ","9","test_device_status_transitions[inactive->active]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
 "
         Test updating device with empty name.
 
         Verifies:
         - Proper validation of update data
-        ","5","test_update_device_with_empty_name","tests.api","2026-05-12","passed","2026-05-12","TestValidationErrors","test_error_handling","",""
+        ","6","test_update_device_with_empty_name","tests.api","2026-05-13","passed","2026-05-13","TestValidationErrors","test_error_handling","",""
 "
-        Test creating device with invalid device type.
-
-        Verifies:
-        - Returns 422 Unprocessable Entity or accepts if flexible
-        ","2","test_create_device_invalid_device_type","tests.api","2026-05-12","passed","2026-05-12","TestValidationErrors","test_error_handling","",""
+    Test the liveness probe endpoint.
+    ","1","test_liveness_endpoint","tests.api","2026-05-13","passed","2026-05-13","","test_health","",""
 "
         Test complete alert management user journey.
 
@@ -862,59 +504,135 @@
         3. View active alerts
         4. Switch to acknowledged alerts tab
         5. Return to dashboard
-        ","2466","test_alert_management_journey[chromium]","tests.integration","2026-05-12","passed","2026-05-12","TestUserJourneys","test_end_to_end","",""
+        ","2506","test_alert_management_journey[chromium]","tests.integration","2026-05-13","passed","2026-05-13","TestUserJourneys","test_end_to_end","",""
 "
-        Test that dashboard page loads with all elements.
-
-        Verifies:
-        - Dashboard stats cards are visible
-        - Device list is visible
-        - Alert panel is visible
-        ","814","test_dashboard_loads_successfully[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestDashboardDisplay","test_dashboard","",""
-"
-        Test deleting a device that doesn't exist.
+        Test updating a device that doesn't exist.
 
         Verifies:
         - Returns 404 Not Found
-        ","3","test_delete_nonexistent_device","tests.api","2026-05-12","passed","2026-05-12","TestResourceNotFoundErrors","test_error_handling","",""
+        ","3","test_update_nonexistent_device","tests.api","2026-05-13","passed","2026-05-13","TestResourceNotFoundErrors","test_error_handling","",""
 "
-    Test that at least one interface is in 'up' status.
-    ","0","test_at_least_one_interface_up","tests.network","2026-05-12","skipped","2026-05-12","","test_interfaces","",""
-"
-        Mock API to return controlled test data.
-
-        This allows testing UI rendering with predictable data,
-        independent of backend state.
-        ","3037","test_mock_devices_api_response[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestNetworkMocking","test_network_mocking","",""
-"
-        Verify that creating a device via API persists correctly to MongoDB.
+        Verify adding device via UI persists to database.
 
         Flow:
-        1. Create device via API
-        2. Verify device exists in MongoDB
-        3. Verify all fields match
-        ","53","test_device_creation_persists_to_database","tests.integration","2026-05-12","passed","2026-05-12","TestApiDatabaseIntegration","test_end_to_end","",""
+        1. Navigate to devices page
+        2. Add device via UI form
+        3. Verify device appears in UI
+        4. Verify device exists in database
+        ","4599","test_add_device_ui_to_database[chromium]","tests.integration","2026-05-13","passed","2026-05-13","TestUiApiDatabaseIntegration","test_end_to_end","",""
 "
-        Parameterized test for creating variable numbers of devices.
-        ","13","test_create_n_devices[3]","tests.api","2026-05-12","passed","2026-05-12","TestBulkOperations","test_data_driven","",""
-"
-        Validate POST /auth/login returns correctly structured token.
-        ","306","test_login_returns_valid_token_schema","tests.api","2026-05-12","passed","2026-05-12","TestAuthSchemaValidation","test_schema_validation","",""
-"
-    Test that a device created via API is persisted in MongoDB.
-    ","5","test_device_created_via_api_exists_in_db","tests.database","2026-05-12","passed","2026-05-12","","test_consistency","",""
-"
-    Data-driven test: Verify device status can be changed.
+    Data-driven test: Create devices from external JSON file.
 
-    Tests various status transition scenarios to ensure
-    the state machine allows valid transitions.
-    ","8","test_device_status_transitions[maintenance->active]","tests.api","2026-05-12","passed","2026-05-12","","test_data_driven","",""
+    This pattern allows test data to be maintained separately
+    from test code, enabling:
+    - Non-developers to add test cases
+    - Environment-specific test data
+    - Easy test data updates without code changes
+    ","6","test_devices_from_external_file[dist-switch-02]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
+"
+    Test GET /alerts/{id} returns specific alert.
+    ","3","test_get_alert_by_id","tests.api","2026-05-13","skipped","2026-05-13","","test_alerts","",""
+"
+        Test that device count is displayed correctly.
+
+        Verifies:
+        - Device count stat card shows a number >= 0
+        ","665","test_dashboard_displays_device_count[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestDashboardDisplay","test_dashboard","",""
+"
+        Test complete login/logout session journey.
+
+        User Story:
+        As a user, I want to:
+        1. Log in with valid credentials
+        2. Navigate through the application
+        3. Log out
+        4. Verify I cannot access protected pages
+        ","3434","test_login_logout_session_journey[chromium]","tests.integration","2026-05-13","passed","2026-05-13","TestUserJourneys","test_end_to_end","",""
+"
+    Test graceful handling of connection timeout.
+
+    This test verifies the framework handles connection failures gracefully.
+    ","1","test_connection_timeout_handling","tests.network","2026-05-13","passed","2026-05-13","","test_connectivity","",""
+"
+        Test deleting device with invalid ObjectId format.
+
+        Verifies:
+        - Returns appropriate error status
+        ","2","test_delete_device_invalid_id_format","tests.api","2026-05-13","passed","2026-05-13","TestInvalidIdFormats","test_error_handling","",""
+"
+    Test retrieving and parsing device version information.
+    ","0","test_device_version_info","tests.network","2026-05-13","skipped","2026-05-13","","test_connectivity","",""
 "
         Test that alert list shows alerts from database.
 
         Verifies:
         - Alert list loads without errors
-        ","768","test_alerts_list_displays_alerts[firefox]","tests.ui","2026-05-12","passed","2026-05-12","TestAlertsPageDisplay","test_alerts","",""
+        ","444","test_alerts_list_displays_alerts[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestAlertsPageDisplay","test_alerts","",""
+"
+        Test that add device dialog opens.
+
+        Verifies:
+        - Clicking Add Device button opens the dialog
+        - Dialog contains required form fields
+        ","836","test_add_device_dialog_opens[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestDeviceCRUD","test_devices","",""
+"
+        Test UI behavior when API returns server error.
+
+        Verifies the application handles errors gracefully
+        without crashing or showing raw error data.
+        ","3278","test_handles_api_500_error_gracefully[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestNetworkMocking","test_network_mocking","",""
+"
+    Test that health endpoint includes database connectivity check.
+    ","2","test_health_endpoint_includes_database_check","tests.api","2026-05-13","passed","2026-05-13","","test_health","",""
+"
+        Test login failure with invalid credentials.
+
+        Verifies:
+        - Error message is displayed for invalid credentials
+        - User stays on login page
+        ","1751","test_login_with_invalid_credentials_shows_error[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestLoginPage","test_login","",""
+"
+    Test POST /devices creates a new device.
+    ","5","test_create_device","tests.api","2026-05-13","passed","2026-05-13","","test_devices","",""
+"
+        Test accessing endpoint with malformed Authorization header.
+
+        Verifies:
+        - Returns 401 Unauthorized or 403 Forbidden
+        - Handles malformed Authorization header
+        ","2","test_access_with_expired_token_format","tests.api","2026-05-13","passed","2026-05-13","TestAuthenticationErrors","test_error_handling","",""
+"
+        Test that alerts page loads with all elements.
+
+        Verifies:
+        - Active tab is visible
+        - Acknowledged tab is visible
+        - Severity filter is visible
+        ","758","test_alerts_page_loads_successfully[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestAlertsPageDisplay","test_alerts","",""
+"
+        Parameterized test for creating variable numbers of devices.
+        ","20","test_create_n_devices[5]","tests.api","2026-05-13","passed","2026-05-13","TestBulkOperations","test_data_driven","",""
+"
+    Test retrieving interface counters (slow test due to data volume).
+    ","0","test_all_interface_counters","tests.network","2026-05-13","skipped","2026-05-13","","test_interfaces","",""
+"
+    Test that alert acknowledgment is persisted in database.
+    ","1","test_alert_acknowledgment_persisted","tests.database","2026-05-13","skipped","2026-05-13","","test_consistency","",""
+"
+    Test filtering alerts by acknowledgment status.
+    ","3","test_get_alerts_filter_by_acknowledged","tests.api","2026-05-13","passed","2026-05-13","","test_alerts","",""
+"
+    Data-driven test: Verify login handles various credential scenarios.
+
+    Tests:
+    - Valid credentials
+    - Invalid password
+    - Non-existent user
+    - Empty credentials
+    ","3","test_login_scenarios[Empty username]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
+"
+    Test that timestamps in database are valid and recent.
+    ","1","test_timestamps_are_valid","tests.database","2026-05-13","passed","2026-05-13","","test_consistency","",""
 "
     Test successful login with valid credentials.
 
@@ -922,13 +640,295 @@
     - Returns 200 status
     - Returns JWT token
     - Returns user information
-    ","308","test_login_with_valid_credentials","tests.api","2026-05-12","passed","2026-05-12","","test_auth","",""
+    ","273","test_login_with_valid_credentials","tests.api","2026-05-13","passed","2026-05-13","","test_auth","",""
 "
-    Test that health endpoint returns healthy status.
-    ","2","test_health_endpoint_returns_healthy_status","tests.api","2026-05-12","passed","2026-05-12","","test_health","",""
+        Mock API to return controlled test data.
+
+        This allows testing UI rendering with predictable data,
+        independent of backend state.
+        ","2818","test_mock_devices_api_response[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestNetworkMocking","test_network_mocking","",""
 "
-        Test that alert list shows alerts from database.
+        Test that login page loads with all required elements.
 
         Verifies:
-        - Alert list loads without errors
-        ","566","test_alerts_list_displays_alerts[chromium]","tests.ui","2026-05-12","passed","2026-05-12","TestAlertsPageDisplay","test_alerts","",""
+        - Username input is visible
+        - Password input is visible
+        - Login button is visible
+        - Logo is displayed
+        ","640","test_login_page_loads_successfully[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestLoginPage","test_login","",""
+"
+        Test that login button shows loading state during authentication.
+
+        Verifies:
+        - Loading indicator appears during login process
+        ","1097","test_login_button_disabled_during_loading[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestLoginPage","test_login","",""
+"
+        Test that device table shows devices from database.
+
+        Verifies:
+        - Device table contains at least one device (seed data)
+        ","434","test_devices_table_displays_devices[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestDevicesPageDisplay","test_devices","",""
+"
+        Test that alert panel is visible on dashboard.
+
+        Verifies:
+        - Alert panel section is visible
+        ","408","test_dashboard_shows_alert_panel[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestDashboardDisplay","test_dashboard","",""
+"
+    Test PUT /alerts/{id}/acknowledge acknowledges an alert.
+    ","4","test_acknowledge_alert","tests.api","2026-05-13","skipped","2026-05-13","","test_alerts","",""
+"
+    Test POST /devices rejects duplicate device names.
+    ","7","test_create_device_duplicate_name","tests.api","2026-05-13","passed","2026-05-13","","test_devices","",""
+"
+        Validate GET /devices returns correctly structured data.
+
+        Each device in the response must conform to DeviceResponse schema.
+        ","5","test_get_devices_returns_valid_schema","tests.api","2026-05-13","passed","2026-05-13","TestDeviceSchemaValidation","test_schema_validation","",""
+"
+        Test UI behavior when API returns 404.
+        ","1330","test_handles_api_404_not_found[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestNetworkMocking","test_network_mocking","",""
+"
+    Test POST /devices validates IP address format.
+    ","2","test_create_device_validation_invalid_ip","tests.api","2026-05-13","passed","2026-05-13","","test_devices","",""
+"
+        Test acknowledging an alert that doesn't exist.
+
+        Verifies:
+        - Returns 404 Not Found
+        ","3","test_acknowledge_nonexistent_alert","tests.api","2026-05-13","passed","2026-05-13","TestResourceNotFoundErrors","test_error_handling","",""
+"
+    Data-driven test: Verify device filtering works correctly.
+
+    Tests various filter combinations against the device list endpoint.
+    ","4","test_device_filtering[Filter by Cisco vendor]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
+"
+        Test login validation with empty username.
+
+        Verifies:
+        - Form validation prevents login with empty username
+        ","610","test_login_with_empty_username[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestLoginPage","test_login","",""
+"
+        Test UI behavior when API returns server error.
+
+        Verifies the application handles errors gracefully
+        without crashing or showing raw error data.
+        ","3672","test_handles_api_500_error_gracefully[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestNetworkMocking","test_network_mocking","",""
+"
+        Verify all device fields are correctly transmitted from DB to API.
+        ","1","test_device_fields_integrity","tests.integration","2026-05-13","skipped","2026-05-13","TestDataConsistency","test_end_to_end","",""
+"
+    Test login fails with nonexistent username.
+    ","3","test_login_with_nonexistent_user","tests.api","2026-05-13","passed","2026-05-13","","test_auth","",""
+"
+        Test that devices page loads with all elements.
+
+        Verifies:
+        - Add device button is visible
+        - Device table is visible
+        - Search input is visible
+        ","439","test_devices_page_loads_successfully[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestDevicesPageDisplay","test_devices","",""
+"
+        Test that login page loads with all required elements.
+
+        Verifies:
+        - Username input is visible
+        - Password input is visible
+        - Login button is visible
+        - Logo is displayed
+        ","503","test_login_page_loads_successfully[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestLoginPage","test_login","",""
+"
+    Data-driven test: Create devices with various valid configurations.
+
+    Tests multiple device types, vendors, and configurations
+    using a single test function with parameterized data.
+    ","5","test_create_valid_devices[Distribution Switch SW1]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
+"
+    Test retrieving detailed interface information.
+    ","0","test_interface_detailed_info","tests.network","2026-05-13","skipped","2026-05-13","","test_interfaces","",""
+"
+        Verify that creating a device via API persists correctly to MongoDB.
+
+        Flow:
+        1. Create device via API
+        2. Verify device exists in MongoDB
+        3. Verify all fields match
+        ","33","test_device_creation_persists_to_database","tests.integration","2026-05-13","passed","2026-05-13","TestApiDatabaseIntegration","test_end_to_end","",""
+"
+    Test logout endpoint.
+    ","2","test_logout","tests.api","2026-05-13","passed","2026-05-13","","test_auth","",""
+"
+    Data-driven test: Verify login handles various credential scenarios.
+
+    Tests:
+    - Valid credentials
+    - Invalid password
+    - Non-existent user
+    - Empty credentials
+    ","286","test_login_scenarios[Wrong password]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
+"
+    Test device list pagination.
+    ","4","test_get_devices_pagination","tests.api","2026-05-13","passed","2026-05-13","","test_devices","",""
+"
+        Test creating device with invalid IP address format.
+
+        Verifies:
+        - Returns 422 Unprocessable Entity
+        ","3","test_create_device_invalid_ip_format","tests.api","2026-05-13","passed","2026-05-13","TestValidationErrors","test_error_handling","",""
+"
+        Validate GET /devices/{id} returns correctly structured data.
+        ","7","test_get_single_device_schema","tests.api","2026-05-13","passed","2026-05-13","TestDeviceSchemaValidation","test_schema_validation","",""
+"
+    Data-driven test: Create devices with various valid configurations.
+
+    Tests multiple device types, vendors, and configurations
+    using a single test function with parameterized data.
+    ","4","test_create_valid_devices[Edge Switch SW2]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
+"
+    Test POST /alerts creates a new alert.
+    ","4","test_create_alert","tests.api","2026-05-13","passed","2026-05-13","","test_alerts","",""
+"
+    Test that a device created via API is persisted in MongoDB.
+    ","6","test_device_created_via_api_exists_in_db","tests.database","2026-05-13","passed","2026-05-13","","test_consistency","",""
+"
+        Parameterized test for creating variable numbers of devices.
+        ","5","test_create_n_devices[1]","tests.api","2026-05-13","passed","2026-05-13","TestBulkOperations","test_data_driven","",""
+"
+    Data-driven test: Create devices from external JSON file.
+
+    This pattern allows test data to be maintained separately
+    from test code, enabling:
+    - Non-developers to add test cases
+    - Environment-specific test data
+    - Easy test data updates without code changes
+    ","5","test_devices_from_external_file[edge-firewall-01]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
+"
+        Test that alert count is displayed correctly.
+
+        Verifies:
+        - Alert count stat card shows a number >= 0
+        ","402","test_dashboard_displays_alert_count[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestDashboardDisplay","test_dashboard","",""
+"
+    Test getting current user information.
+    ","3","test_get_current_user","tests.api","2026-05-13","passed","2026-05-13","","test_auth","",""
+"
+    Data-driven test: Create devices from external JSON file.
+
+    This pattern allows test data to be maintained separately
+    from test code, enabling:
+    - Non-developers to add test cases
+    - Environment-specific test data
+    - Easy test data updates without code changes
+    ","4","test_devices_from_external_file[core-router-01]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
+"
+        Test UI behavior when API returns 404.
+        ","1099","test_handles_api_404_not_found[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestNetworkMocking","test_network_mocking","",""
+"
+        Validate /health returns correctly structured data.
+        ","2","test_health_endpoint_schema","tests.api","2026-05-13","passed","2026-05-13","TestHealthSchemaValidation","test_schema_validation","",""
+"
+        Test complete device management user journey.
+
+        User Story:
+        As a network administrator, I want to:
+        1. Log in to the dashboard
+        2. View existing devices
+        3. Add a new device
+        4. Verify the device appears in the list
+        5. Navigate back to dashboard and see updated count
+        ","4578","test_complete_device_management_journey[chromium]","tests.integration","2026-05-13","passed","2026-05-13","TestUserJourneys","test_end_to_end","",""
+"
+    Test that device count from API matches database count.
+    ","5","test_device_count_matches_api","tests.database","2026-05-13","passed","2026-05-13","","test_consistency","",""
+"
+    Test DELETE /devices/{id} returns 404 for nonexistent device.
+    ","3","test_delete_device_not_found","tests.api","2026-05-13","passed","2026-05-13","","test_devices","",""
+"
+    Test POST /devices validates required fields.
+    ","2","test_create_device_validation_missing_required","tests.api","2026-05-13","passed","2026-05-13","","test_devices","",""
+"
+    Data-driven test: Create devices with various valid configurations.
+
+    Tests multiple device types, vendors, and configurations
+    using a single test function with parameterized data.
+    ","5","test_create_valid_devices[Branch Router R2]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
+"
+        Verify that updating a device via API persists correctly to MongoDB.
+
+        Flow:
+        1. Create device via API
+        2. Update device via API
+        3. Verify changes in MongoDB
+        ","9","test_device_update_persists_to_database","tests.integration","2026-05-13","passed","2026-05-13","TestApiDatabaseIntegration","test_end_to_end","",""
+"
+        Test that DeviceResponse schema validates IP addresses.
+        ","1","test_device_schema_ip_validation","tests.api","2026-05-13","passed","2026-05-13","TestDeviceSchemaValidation","test_schema_validation","",""
+"
+        Test creating device without required fields.
+
+        Verifies:
+        - Returns 422 Unprocessable Entity
+        - Response indicates missing fields
+        ","2","test_create_device_missing_required_fields","tests.api","2026-05-13","passed","2026-05-13","TestValidationErrors","test_error_handling","",""
+"
+        Test login failure with invalid credentials.
+
+        Verifies:
+        - Error message is displayed for invalid credentials
+        - User stays on login page
+        ","1920","test_login_with_invalid_credentials_shows_error[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestLoginPage","test_login","",""
+"
+    Test that device updates via API are persisted in MongoDB.
+    ","9","test_device_update_reflected_in_db","tests.database","2026-05-13","passed","2026-05-13","","test_consistency","",""
+"
+        Test fetching device with invalid ObjectId format.
+
+        Verifies:
+        - Returns 400 Bad Request or 404 Not Found
+        ","2","test_get_device_invalid_id_format","tests.api","2026-05-13","passed","2026-05-13","TestInvalidIdFormats","test_error_handling","",""
+"
+    Test login fails when password is missing.
+    ","2","test_login_missing_password","tests.api","2026-05-13","passed","2026-05-13","","test_auth","",""
+"
+    Test PUT /devices/{id} updates a device.
+    ","8","test_update_device","tests.api","2026-05-13","passed","2026-05-13","","test_devices","",""
+"
+    Data-driven test: Verify login handles various credential scenarios.
+
+    Tests:
+    - Valid credentials
+    - Invalid password
+    - Non-existent user
+    - Empty credentials
+    ","301","test_login_scenarios[Valid credentials]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
+"
+        Test UI displays appropriate message for empty data.
+        ","2865","test_mock_empty_device_list[chromium]","tests.ui","2026-05-13","passed","2026-05-13","TestNetworkMocking","test_network_mocking","",""
+"
+        Test accessing endpoint with invalid JWT token.
+
+        Verifies:
+        - Returns 401 Unauthorized
+        - Handles malformed tokens gracefully
+        ","2","test_access_with_invalid_token","tests.api","2026-05-13","passed","2026-05-13","TestAuthenticationErrors","test_error_handling","",""
+"
+        Test that alert panel is visible on dashboard.
+
+        Verifies:
+        - Alert panel section is visible
+        ","721","test_dashboard_shows_alert_panel[firefox]","tests.ui","2026-05-13","passed","2026-05-13","TestDashboardDisplay","test_dashboard","",""
+"
+        Test login endpoint with invalid JSON payload.
+
+        Verifies:
+        - Returns 422 Unprocessable Entity
+        ","1","test_login_with_invalid_json","tests.api","2026-05-13","passed","2026-05-13","TestAuthenticationErrors","test_error_handling","",""
+"
+    Data-driven test: Verify device status can be changed.
+
+    Tests various status transition scenarios to ensure
+    the state machine allows valid transitions.
+    ","8","test_device_status_transitions[active->maintenance]","tests.api","2026-05-13","passed","2026-05-13","","test_data_driven","",""
+"
+    Test retrieving interface IP addresses.
+    ","0","test_interface_ip_addresses","tests.network","2026-05-13","skipped","2026-05-13","","test_interfaces","",""
