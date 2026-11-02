@@ -1,0 +1,5 @@
+INFO:pages.base_page:Navigating to: http://localhost:3000/login
+INFO:pages.login_page:Attempting login with username: invalid_user
+DEBUG:pages.base_page:Filling [data-testid="username-input"] with: invalid_user
+DEBUG:pages.base_page:Filling [data-testid="password-input"] with: wrong_password
+DEBUG:pages.base_page:Clicking: [data-testid="login-button"]
